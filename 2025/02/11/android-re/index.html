@@ -27,8 +27,11 @@
 <meta property="og:description" content="Android逆向apk文件结构   文件 解释    assets目录 存放apk的静态资源文件，如视频、音频、图片等。   lib&#x2F;目录 arm64-v8a只用于64位的Android设备；armeabi-v7a基本通用所有Android设备；x86常见用于安卓模拟器，其目录下的.so文件是c&#x2F;c++编译的动态链接库。   META-INF目录 保存应用的签名信息，相当于a">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://becks723.github.io/android-re/activity-lifecycle.png">
+<meta property="og:image" content="https://becks723.github.io/android-re%5Cjeb-start.png">
+<meta property="og:image" content="https://becks723.github.io/android-re%5Cjeb-attch.png">
+<meta property="og:image" content="https://becks723.github.io/android-re%5Cjeb-debug.png">
 <meta property="article:published_time" content="2025-02-10T22:09:16.000Z">
-<meta property="article:modified_time" content="2025-03-01T13:54:54.943Z">
+<meta property="article:modified_time" content="2025-03-03T16:23:24.993Z">
 <meta property="article:author" content="Becks723">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://becks723.github.io/android-re/activity-lifecycle.png">
@@ -226,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          2.8k 字
         
       </span>
     
@@ -237,7 +240,7 @@
         
         
         
-          22 分钟
+          24 分钟
         
       </span>
     
@@ -495,7 +498,7 @@
 <p>中的<code>AdActivity</code>改成页面Activity即可实现跳过广告。</p>
 <h3 id="跳过弹窗法一-修改xml中的versionCode"><a href="#跳过弹窗法一-修改xml中的versionCode" class="headerlink" title="跳过弹窗法一 - 修改xml中的versionCode"></a>跳过弹窗法一 - 修改xml中的versionCode</h3><p>考虑到弹窗有一部分是<strong>更新提示</strong>，可以改版本号跳过更新检测。即，修改<code>AndroidManifest.xml</code>中<code>versionCode</code>和<code>versionName</code>。</p>
 <p>（适用于<strong>已知最新版本号</strong>的前提）</p>
-<h3 id="跳过弹窗法二-Hook弹窗（算法助手）"><a href="#跳过弹窗法二-Hook弹窗（算法助手）" class="headerlink" title="跳过弹窗法二 - Hook弹窗（算法助手）"></a>跳过弹窗法二 - Hook弹窗（算法助手）</h3><p>（针对那些劫持返回键的弹窗）</p>
+<h3 id="跳过弹窗法二-Hook弹窗（算法助手）"><a href="#跳过弹窗法二-Hook弹窗（算法助手）" class="headerlink" title="跳过弹窗法二 - Hook弹窗（算法助手）"></a>跳过弹窗法二 - Hook弹窗（<a target="_blank" rel="noopener" href="https://blog.csdn.net/u014645251/article/details/119030982">算法助手</a>）</h3><p>（针对那些劫持返回键的弹窗）</p>
 <p>算法助手 - 开启对应应用的<code>应用总开关</code>和<code>UI</code>下的<code>弹窗定位（返回键可取消）</code>，再点击右上角的小三角启动应用。被劫持的返回键又能用了！</p>
 <p>（屏蔽关键词弹窗）</p>
 <p>算法助手 - 开启对应应用的<code>应用总开关</code> 和 <code>UI</code>下的<code>屏蔽关键词弹窗</code>，输入弹窗中模糊&#x2F;精确的关键词，如”广告”，即可一键屏蔽所有使用该关键词的广告！</p>
@@ -507,6 +510,25 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">ImageView</span></span><br><span class="hljs-tag">                    <span class="hljs-attr">android:id</span>=<span class="hljs-string">&quot;@7F0801CA&quot;</span>           &lt;!<span class="hljs-attr">--</span> <span class="hljs-attr">十六进制ViewId</span> <span class="hljs-attr">--</span>&gt;</span><br>                    android:background=&quot;@7F0D0017&quot;<br>                    android:layout_width=&quot;-2&quot;        <span class="hljs-comment">&lt;!-- 弹窗宽度，-2代表 wrap_content 自适应--&gt;</span><br>                    android:layout_height=&quot;150dp&quot;    <span class="hljs-comment">&lt;!-- 弹窗高度 --&gt;</span><br>                    android:layout_marginTop=&quot;100dp&quot; /&gt;<br></code></pre></td></tr></table></figure>
 
 <p>要跳过横幅，只需把宽高全调成<code>0dp</code>即可。</p>
+<h2 id="Jeb-Decompiler"><a href="#Jeb-Decompiler" class="headerlink" title="Jeb Decompiler"></a>Jeb Decompiler</h2><p>一款安卓的反编译工具，可进行<strong>动态调试</strong>。</p>
+<h2 id="利用-Jeb-动态调试"><a href="#利用-Jeb-动态调试" class="headerlink" title="利用 Jeb 动态调试"></a>利用 Jeb 动态调试</h2><p>简记一个步骤。</p>
+<ol>
+<li><p>打开安卓usb调试功能。设置 - 点击版本号7次进入开发者选项 - 启用<code>USB调试</code></p>
+</li>
+<li><p>设置应用可调试权限（debuggable）。打开<code>AndroidManifest.xml</code> - 添加<code>android:debuggable=&quot;true&quot;</code> - 保存覆盖安装</p>
+</li>
+<li><p>pc命令行输入adb指令。</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs vim">adb <span class="hljs-keyword">shell</span> <span class="hljs-keyword">am</span> start -D -n 包名/类名<br><br>例如：<br>adb <span class="hljs-keyword">shell</span> <span class="hljs-keyword">am</span> start -D -n <span class="hljs-keyword">com</span>.zj.wuaipojie/.ui.MainActivity<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>打开jeb，拖入应用apk反编译。点击<code>开始</code>图标开始调试。</p>
+<p><img src="/android-re%5Cjeb-start.png" srcset="/img/loading.gif" lazyload alt="image-20250304001621185"></p>
+<p>确保进程名和你的应用一致（图中为<code>com.zj.wuaipojie</code>），点击<code>附上</code>。</p>
+<p><img src="/android-re%5Cjeb-attch.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>正式开始调试。光标停在某一行smali字节码上，<code>ctrl+B</code>下断点。</p>
+<p><img src="/android-re%5Cjeb-debug.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
 
                 
               </div>
