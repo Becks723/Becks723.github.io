@@ -26,15 +26,15 @@
 <meta property="og:site_name" content="Welcome to becks723&#39;s blog!">
 <meta property="og:description" content="Android逆向apk文件结构   文件 解释    assets目录 存放apk的静态资源文件，如视频、音频、图片等。   lib&#x2F;目录 arm64-v8a只用于64位的Android设备；armeabi-v7a基本通用所有Android设备；x86常见用于安卓模拟器，其目录下的.so文件是c&#x2F;c++编译的动态链接库。   META-INF目录 保存应用的签名信息，相当于a">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://becks723.github.io/.io//activity-lifecycle.png">
-<meta property="og:image" content="https://becks723.github.io/.io//jeb-start.png">
-<meta property="og:image" content="https://becks723.github.io/.io//jeb-attch.png">
-<meta property="og:image" content="https://becks723.github.io/.io//jeb-debug.png">
+<meta property="og:image" content="https://becks723.github.io/2025/02/11/android-re/activity-lifecycle.png">
+<meta property="og:image" content="https://becks723.github.io/2025/02/11/android-re/jeb-start.png">
+<meta property="og:image" content="https://becks723.github.io/2025/02/11/android-re/jeb-attch.png">
+<meta property="og:image" content="https://becks723.github.io/2025/02/11/android-re/jeb-debug.png">
 <meta property="article:published_time" content="2025-02-10T22:09:16.000Z">
-<meta property="article:modified_time" content="2025-03-04T14:35:28.695Z">
+<meta property="article:modified_time" content="2025-03-04T15:01:16.651Z">
 <meta property="article:author" content="Becks723">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://becks723.github.io/.io//activity-lifecycle.png">
+<meta name="twitter:image" content="https://becks723.github.io/2025/02/11/android-re/activity-lifecycle.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -391,7 +391,8 @@
 <td>接口。</td>
 </tr>
 </tbody></table>
-<h2 id="Activity的生命周期"><a href="#Activity的生命周期" class="headerlink" title="Activity的生命周期"></a>Activity的生命周期</h2><p><img src="/.io//activity-lifecycle.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="Activity的生命周期"><a href="#Activity的生命周期" class="headerlink" title="Activity的生命周期"></a>Activity的生命周期</h2><img src="/2025/02/11/android-re/activity-lifecycle.png" srcset="/img/loading.gif" lazyload class="" title="img">
+
 <table>
 <thead>
 <tr>
@@ -521,13 +522,13 @@
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs vim">adb <span class="hljs-keyword">shell</span> <span class="hljs-keyword">am</span> start -D -n 包名/类名<br><br>例如：<br>adb <span class="hljs-keyword">shell</span> <span class="hljs-keyword">am</span> start -D -n <span class="hljs-keyword">com</span>.zj.wuaipojie/.ui.MainActivity<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>打开jeb，拖入应用apk反编译。点击<code>开始</code>图标开始调试。</p>
-<p><img src="/.io//jeb-start.png" srcset="/img/loading.gif" lazyload alt="image-20250304001621185"></p>
+<img src="/2025/02/11/android-re/jeb-start.png" srcset="/img/loading.gif" lazyload class="" title="image-20250304001621185">
+
 <p>确保进程名和你的应用一致（图中为<code>com.zj.wuaipojie</code>），点击<code>附上</code>。</p>
-<p><img src="/.io//jeb-attch.png" srcset="/img/loading.gif" lazyload></p>
+<img src="/2025/02/11/android-re/jeb-attch.png" srcset="/img/loading.gif" lazyload class="">
 </li>
 <li><p>正式开始调试。光标停在某一行smali字节码上，<code>ctrl+B</code>下断点。</p>
-<p><img src="/.io//jeb-debug.png" srcset="/img/loading.gif" lazyload></p>
-</li>
+<img src="/2025/02/11/android-re/jeb-debug.png" srcset="/img/loading.gif" lazyload class=""></li>
 </ol>
 
                 
