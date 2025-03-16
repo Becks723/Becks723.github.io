@@ -19,15 +19,15 @@
   <meta name="author" content="Becks723">
   <meta name="keywords" content="">
   
-    <meta name="description" content="java语言学习变量命名由字母、数学、_（下划线）、**$**组成，数字不可以开头。">
+    <meta name="description" content="apk签名通过对 Apk 进行签名，开发者可以证明对 Apk 的所有权和控制权，可用于安装和更新其应用。而在 Android 设备上的安装 Apk ，如果是一个没有被签名的 Apk，则会被拒绝安装。在安装 Apk 的时候，软件包管理器也会验证 Apk 是否已经被正确签名，并且通过签名证书和数据摘要验证是否合法没有被篡改。只有确认安全无篡改的情况下，才允许安装在设备上。 简单来说，APK 的签名主要">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java">
-<meta property="og:url" content="https://becks723.github.io/2025/02/26/java/index.html">
+<meta property="og:title" content="apk签名校验">
+<meta property="og:url" content="https://becks723.github.io/2025/03/05/apk%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C/index.html">
 <meta property="og:site_name" content="Welcome to becks723&#39;s blog!">
-<meta property="og:description" content="java语言学习变量命名由字母、数学、_（下划线）、**$**组成，数字不可以开头。">
+<meta property="og:description" content="apk签名通过对 Apk 进行签名，开发者可以证明对 Apk 的所有权和控制权，可用于安装和更新其应用。而在 Android 设备上的安装 Apk ，如果是一个没有被签名的 Apk，则会被拒绝安装。在安装 Apk 的时候，软件包管理器也会验证 Apk 是否已经被正确签名，并且通过签名证书和数据摘要验证是否合法没有被篡改。只有确认安全无篡改的情况下，才允许安装在设备上。 简单来说，APK 的签名主要">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-02-26T13:04:33.000Z">
-<meta property="article:modified_time" content="2025-02-26T14:26:49.148Z">
+<meta property="article:published_time" content="2025-03-05T08:16:47.000Z">
+<meta property="article:modified_time" content="2025-03-05T09:19:40.159Z">
 <meta property="article:author" content="Becks723">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -35,7 +35,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>java - Welcome to becks723&#39;s blog!</title>
+  <title>apk签名校验 - Welcome to becks723&#39;s blog!</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="java"></span>
+            <span id="subtitle" data-typed-text="apk签名校验"></span>
           
         </div>
 
@@ -212,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-02-26 21:04" pubdate>
-          2025年2月26日 晚上
+        <time datetime="2025-03-05 16:16" pubdate>
+          2025年3月5日 下午
         </time>
       </span>
     
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          27 字
+          1k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          1 分钟
+          9 分钟
         
       </span>
     
@@ -272,12 +272,52 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">java</h1>
+            <h1 id="seo-header">apk签名校验</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="java语言学习"><a href="#java语言学习" class="headerlink" title="java语言学习"></a>java语言学习</h2><h2 id="变量命名"><a href="#变量命名" class="headerlink" title="变量命名"></a>变量命名</h2><p>由字母、数学、<code>_</code>（下划线）、**<code>$</code>**组成，数字不可以开头。</p>
+                <h1 id="apk签名"><a href="#apk签名" class="headerlink" title="apk签名"></a>apk签名</h1><p>通过对 Apk 进行签名，开发者可以证明对 Apk 的所有权和控制权，可用于安装和更新其应用。而在 Android 设备上的安装 Apk ，如果是一个没有被签名的 Apk，则会被拒绝安装。在安装 Apk 的时候，软件包管理器也会验证 Apk 是否已经被正确签名，并且通过签名证书和数据摘要验证是否合法没有被篡改。只有确认安全无篡改的情况下，才允许安装在设备上。</p>
+<p>简单来说，APK 的签名主要作用有两个：</p>
+<ol>
+<li>证明 APK 的所有者。</li>
+<li>允许 Android 市场和设备校验 APK 的正确性。</li>
+</ol>
+<p>Android 目前支持以下四种应用签名方案：</p>
+<ul>
+<li>v1 方案：基于 JAR 签名。</li>
+<li>v2 方案：APK 签名方案 v2（在 Android 7.0 中引入）</li>
+<li>v3 方案：APK 签名方案 v3（在 Android 9 中引入）</li>
+<li>v4 方案：APK 签名方案 v4（在 Android 11 中引入）</li>
+</ul>
+<p>V1 签名的机制主要就在 <code>META-INF</code> 目录下的三个文件，<code>MANIFEST.MF</code>，<code>ANDROID.SF</code>，<code>ANDROID.RSA</code>，他们都是 V1 签名的产物。<br>（1）<code>MANIFEST.MF</code>：这是摘要文件。程序遍历Apk包中的所有文件(entry)，对非文件夹非签名文件的文件，逐个用SHA1(安全哈希算法)生成摘要信息，再用Base64进行编码。如果你改变了apk包中的文件，那么在apk安装校验时，改变后的文件摘要信息与MANIFEST.MF的检验信息不同，于是程序就不能成功安装。</p>
+
+
+<p>（2）<code>ANDROID.SF</code>：这是对摘要的签名文件。对前一步生成的MANIFEST.MF，使用SHA1-RSA算法，用开发者的私钥进行签名。在安装时只能使用公钥才能解密它。解密之后，将它与未加密的摘要信息（即，MANIFEST.MF文件）进行对比，如果相符，则表明内容没有被异常修改。</p>
+
+
+<p>（3）<code>ANDROID.RSA</code>文件中保存了公钥、所采用的加密算法等信息。</p>
+
+
+<p>在某些情况下，直接对apk进行v1签名可以绕过apk的签名校验.</p>
+<p>v2方案会将 APK 文件视为 blob，并对整个文件进行签名检查。对 APK 进行的任何修改（包括对 ZIP 元数据进行的修改）都会使 APK 签名作废。这种形式的 APK 验证不仅速度要快得多，而且能够发现更多种未经授权的修改。</p>
+<h1 id="签名校验"><a href="#签名校验" class="headerlink" title="签名校验"></a>签名校验</h1><p>什么是签名校验？如何判断是否有签名校验？</p>
+<p>**不做任何修改，直接签名安装，应用闪退则说明大概率有签名校验。**一般来说，普通的签名校验会导致软件的闪退、黑屏、卡启动页等。甚至有一些比较狠的作者，会直接<code>rm -rf /</code>，把基带都格掉的一键变砖。</p>
+<p>一些闪退的指令：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">kill/killProcess()   <span class="hljs-comment">// 杀死当前应用活动的进程。这一操作将会把所有该进程内的资源（包括线程全部清理掉）。当然，由于ActivityManager时刻监听着进程，一旦发现进程被非正常Kill，它将会试图去重启这个进程。这就是为什么，有时候当我们试图这样去结束掉应用时，发现它又自动重新启动的原因.</span><br>    <br>system.exit()   <span class="hljs-comment">// 杀死了整个进程，这时候活动所占的资源会被释放。</span><br>    <br>finish()        <span class="hljs-comment">// 仅仅针对Activity，当调用finish()时，只是将活动推向后台，并没有立即释放内存、活动资源。</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="签名校验对抗"><a href="#签名校验对抗" class="headerlink" title="签名校验对抗"></a>签名校验对抗</h1><p>方法一：<a target="_blank" rel="noopener" href="https://github.com/LSPosed/CorePatch">核心破解</a>插件，无需签名安装应用。</p>
+<p>方法二：一键通过签名工具，例如 MT、NP、ARMPro、CNFIX、Modex 的去除签名校验功能。</p>
+<p>方法三：具体分析签名校验逻辑（改smali字节码，手撕签名校验）</p>
+<p>方法四：io重定向</p>
+<p>方法五:去作者家严刑拷打拿到<code>.jks</code>文件和密码</p>
+<h2 id="手撕校验实例"><a href="#手撕校验实例" class="headerlink" title="手撕校验实例"></a>手撕校验实例</h2><p>算法助手 - 开启<code>Log捕获</code> </p>
+<p>下图为拦截到的<code>exit()</code>调用。</p>
+
+
+<p>解决方法：简单粗暴，注释掉 smali码中调用<code>exit()</code>的一行即可。</p>
 
                 
               </div>
@@ -295,8 +335,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>java</div>
-      <div>https://becks723.github.io/2025/02/26/java/</div>
+      <div>apk签名校验</div>
+      <div>https://becks723.github.io/2025/03/05/apk签名校验/</div>
     </div>
     <div class="license-meta">
       
@@ -308,7 +348,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年2月26日</div>
+          <div>2025年3月5日</div>
         </div>
       
       
@@ -340,9 +380,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/03/05/apk%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C/" title="apk签名校验">
+                      <a href="/2025/03/16/%E7%BB%9F%E8%AE%A1%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0/" title="统计代码行数">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">apk签名校验</span>
+                        <span class="hidden-mobile">统计代码行数</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -350,8 +390,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/02/15/%E8%8F%9C%E8%B0%B1/" title="菜谱">
-                        <span class="hidden-mobile">菜谱</span>
+                      <a href="/2025/02/26/java/" title="java">
+                        <span class="hidden-mobile">java</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
