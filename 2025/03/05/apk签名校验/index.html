@@ -26,10 +26,15 @@
 <meta property="og:site_name" content="Welcome to becks723&#39;s blog!">
 <meta property="og:description" content="apk签名通过对 Apk 进行签名，开发者可以证明对 Apk 的所有权和控制权，可用于安装和更新其应用。而在 Android 设备上的安装 Apk ，如果是一个没有被签名的 Apk，则会被拒绝安装。在安装 Apk 的时候，软件包管理器也会验证 Apk 是否已经被正确签名，并且通过签名证书和数据摘要验证是否合法没有被篡改。只有确认安全无篡改的情况下，才允许安装在设备上。 简单来说，APK 的签名主要">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://becks723.github.io/2025/03/05/apk%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C/MANIFESTMF.png">
+<meta property="og:image" content="https://becks723.github.io/2025/03/05/apk%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C/ANDROIDSF.png">
+<meta property="og:image" content="https://becks723.github.io/2025/03/05/apk%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C/ANDROIDRSA.png">
+<meta property="og:image" content="https://becks723.github.io/2025/03/05/apk%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C/log-exit2.png">
 <meta property="article:published_time" content="2025-03-05T08:16:47.000Z">
 <meta property="article:modified_time" content="2025-03-05T09:19:40.159Z">
 <meta property="article:author" content="Becks723">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://becks723.github.io/2025/03/05/apk%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C/MANIFESTMF.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -291,13 +296,13 @@
 <li>v4 方案：APK 签名方案 v4（在 Android 11 中引入）</li>
 </ul>
 <p>V1 签名的机制主要就在 <code>META-INF</code> 目录下的三个文件，<code>MANIFEST.MF</code>，<code>ANDROID.SF</code>，<code>ANDROID.RSA</code>，他们都是 V1 签名的产物。<br>（1）<code>MANIFEST.MF</code>：这是摘要文件。程序遍历Apk包中的所有文件(entry)，对非文件夹非签名文件的文件，逐个用SHA1(安全哈希算法)生成摘要信息，再用Base64进行编码。如果你改变了apk包中的文件，那么在apk安装校验时，改变后的文件摘要信息与MANIFEST.MF的检验信息不同，于是程序就不能成功安装。</p>
-
+<img src="/2025/03/05/apk%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C/MANIFESTMF.png" srcset="/img/loading.gif" lazyload class="">
 
 <p>（2）<code>ANDROID.SF</code>：这是对摘要的签名文件。对前一步生成的MANIFEST.MF，使用SHA1-RSA算法，用开发者的私钥进行签名。在安装时只能使用公钥才能解密它。解密之后，将它与未加密的摘要信息（即，MANIFEST.MF文件）进行对比，如果相符，则表明内容没有被异常修改。</p>
-
+<img src="/2025/03/05/apk%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C/ANDROIDSF.png" srcset="/img/loading.gif" lazyload class="">
 
 <p>（3）<code>ANDROID.RSA</code>文件中保存了公钥、所采用的加密算法等信息。</p>
-
+<img src="/2025/03/05/apk%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C/ANDROIDRSA.png" srcset="/img/loading.gif" lazyload class="">
 
 <p>在某些情况下，直接对apk进行v1签名可以绕过apk的签名校验.</p>
 <p>v2方案会将 APK 文件视为 blob，并对整个文件进行签名检查。对 APK 进行的任何修改（包括对 ZIP 元数据进行的修改）都会使 APK 签名作废。这种形式的 APK 验证不仅速度要快得多，而且能够发现更多种未经授权的修改。</p>
@@ -315,7 +320,7 @@
 <p>方法五:去作者家严刑拷打拿到<code>.jks</code>文件和密码</p>
 <h2 id="手撕校验实例"><a href="#手撕校验实例" class="headerlink" title="手撕校验实例"></a>手撕校验实例</h2><p>算法助手 - 开启<code>Log捕获</code> </p>
 <p>下图为拦截到的<code>exit()</code>调用。</p>
-
+<img src="/2025/03/05/apk%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C/log-exit2.png" srcset="/img/loading.gif" lazyload class="">
 
 <p>解决方法：简单粗暴，注释掉 smali码中调用<code>exit()</code>的一行即可。</p>
 
@@ -380,9 +385,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/03/16/%E7%BB%9F%E8%AE%A1%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0/" title="统计代码行数">
+                      <a href="/2025/03/21/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95/" title="代码随想录">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">统计代码行数</span>
+                        <span class="hidden-mobile">代码随想录</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

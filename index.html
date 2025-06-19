@@ -229,15 +229,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2025/03/16/%E7%BB%9F%E8%AE%A1%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0/" target="_self">
-          统计代码行数
+        <a href="/2025/06/11/ros2/" target="_self">
+          ros2
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/03/16/%E7%BB%9F%E8%AE%A1%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/06/11/ros2/" target="_self">
         <div>
-          统计代码行数工具 cloccloc是一款优秀的命令行工具，主要实现了统计代码的行数、注释的行数、空白的行数。此外，它支持识别广泛的编程语言，是编程人员统计、了解项目代码规模和质量的好帮手。 安装来到cloc的github页面，在releases页面直接下载最新exe程序，下载完成后放在合适的文件夹下即可（个人放在Program Files (x86)\Cloc目录下）。 基本使用单个文件1cloc
+          功能包（pkg）一个功能包可以被认为是ROS2代码的容器。如果希望能够管理代码或与他人共享代码，那么需要将其组织在一个包中。通过包，可以发布ROS2工作，并允许其他人轻松地构建和使用它。 功能包 和 程序 的关系一个功能包里可以包含多个程序。这些程序分成不同职责，共同构成一个功能包的完整功能。通过cmake可控制多个可执行文件： 12345# ...add_executable(program1
         </div>
       </a>
 
@@ -245,8 +245,206 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2025-03-16 16:45" pubdate>
-              2025-03-16
+            <time datetime="2025-06-11 20:19" pubdate>
+              2025-06-11
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/06/10/vscode-IntelliSense%E6%89%BE%E4%B8%8D%E5%88%B0%E5%8C%85%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" target="_self">
+          vscode IntelliSense找不到包的解决方法
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/06/10/vscode-IntelliSense%E6%89%BE%E4%B8%8D%E5%88%B0%E5%8C%85%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" target="_self">
+        <div>
+          问题背景在用vscode写ros2项目时，势必会有引用rclcpp库这一步。一般只需在CMakeLists.txt中写好引用rclcpp的相关代码即可顺利编译： 12345...find_package(rclcpp REQUIRED)target_include_directories(main PUBLIC $&#123;rclcpp_INCLUDE_DIRS&#125;)target_lin
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-06-10 16:01" pubdate>
+              2025-06-10
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/" target="_self">
+          rm校赛2025
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/" target="_self">
+        <div>
+          赛规回顾主办方提供一个usb摄像头、一张视觉识别标签。选手需要将摄像头连接电脑，捕捉视觉标签并加以识别。识别结果决定了同队的机器人往哪边的（左&#x2F;右）核心区发送弹丸。 视觉标签视觉识别标签主要有以下几个部分构成：定位方块、指示方块、指向三角形。其中指向三角形与指示方块颜色一致代码这一标签指示的方向是正确的，反之为错误的。 视觉标识尺寸为 150*150，材质为 A4 纸彩印，视觉识别标签的
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-05-28 15:27" pubdate>
+              2025-05-28
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/05/27/gmp/" target="_self">
+          gmp
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/27/gmp/" target="_self">
+        <div>
+          GMP大数库（https://gmplib.org/） 大整数（mpz_t）储存方式使用“字”（limb）数组来模拟大数。GMP 不使用字符串或高层封装来表示大数，而是模拟 CPU 的“低位字”运算，直接操作无符号整型数组，效率极高。 1234567typedef struct &#123;  int _mp_alloc;     // 分配了多少个 limb（内存块）  int _mp_size
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-05-27 20:57" pubdate>
+              2025-05-27
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/05/14/opencv/" target="_self">
+          opencv
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/14/opencv/" target="_self">
+        <div>
+          通过进行像素算术运算改变图像亮度123456789101112using namespace cv;void main()&#123;    Mat src = imread(&quot;...&quot;);    Mat dst;    add(src, Scalar(50,50,50), dst);  // 相当于对每个像素点的bgr各加50	// subtract(src, Scalar(
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-05-14 01:33" pubdate>
+              2025-05-14
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/04/23/%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86/" target="_self">
+          虚拟机配置git代理
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/04/23/%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86/" target="_self">
+        <div>
+          虚拟机配置代理git把玩我的虚拟机时发现竟然无法用git clone命令  fatal: unable to access ‘https://github.com/P-Chao/QRCode-CV4.git/‘: Failed to connect to github.com port 443 after 10 ms: Connection refused  于是我用了以下步骤解决：  宿主机是w
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-04-23 02:14" pubdate>
+              2025-04-23
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/03/21/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95/" target="_self">
+          代码随想录
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/03/21/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95/" target="_self">
+        <div>
+          哈希表定义：一种利用特殊值直接访问数据的数据结构。 ★ 使用场景：判断某个值是否出现在集合中&#x2F; 出现过。 拿空间换时间。时间复杂度：普通暴力寻找：O(n)，哈希法：O(1) 哈希函数？ 哈希碰撞？ hashcode？ 字符串 std::reverse()的范围是左开右闭 [first, last)，想要翻转第8个字符到第12个字符的话，应写 12std:reverse(str.begin
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-03-21 20:14" pubdate>
+              2025-03-21
             </time>
           </div>
         
@@ -328,39 +526,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2025/02/15/%E8%8F%9C%E8%B0%B1/" target="_self">
-          菜谱
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/02/15/%E8%8F%9C%E8%B0%B1/" target="_self">
-        <div>
-          菜谱（记录一些做菜过程） 番茄炒蛋2025.02.14  食材准备： 两个番茄（拳头大小的话要3个），适量鸡蛋（4个） 三瓣大蒜   大蒜切末。 打蛋，蛋液里加盐。 番茄一个切成小块，另一个大块，分开放在盘子里备用。 热锅倒油，等油温上来以后，倒入蛋液。大火翻炒待凝固后捞出。 （没油了的话再加点）下蒜末和小块番茄，待炒出汁水后下大块番茄，继续翻炒2min。 将鸡蛋重新倒回锅，调味：一勺糖、一勺酱油
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-02-15 06:45" pubdate>
-              2025-02-15
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
         <a href="/2025/02/11/android-re/" target="_self">
           android-re
         </a>
@@ -388,94 +553,13 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/02/09/python/" target="_self">
-          python
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/02/09/python/" target="_self">
-        <div>
-          
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-02-09 01:15" pubdate>
-              2025-02-09
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/02/08/hello-world/" target="_self">
-          Hello World
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/02/08/hello-world/" target="_self">
-        <div>
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-02-08 11:58" pubdate>
-              2025-02-08
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/misc/" class="category-chain-item">misc</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
 
 
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
 
 
 

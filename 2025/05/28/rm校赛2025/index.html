@@ -1,0 +1,792 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Becks723">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="赛规回顾主办方提供一个usb摄像头、一张视觉识别标签。选手需要将摄像头连接电脑，捕捉视觉标签并加以识别。识别结果决定了同队的机器人往哪边的（左&#x2F;右）核心区发送弹丸。 视觉标签视觉识别标签主要有以下几个部分构成：定位方块、指示方块、指向三角形。其中指向三角形与指示方块颜色一致代码这一标签指示的方向是正确的，反之为错误的。 视觉标识尺寸为 150*150，材质为 A4 纸彩印，视觉识别标签的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rm校赛2025">
+<meta property="og:url" content="https://becks723.github.io/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/index.html">
+<meta property="og:site_name" content="Welcome to becks723&#39;s blog!">
+<meta property="og:description" content="赛规回顾主办方提供一个usb摄像头、一张视觉识别标签。选手需要将摄像头连接电脑，捕捉视觉标签并加以识别。识别结果决定了同队的机器人往哪边的（左&#x2F;右）核心区发送弹丸。 视觉标签视觉识别标签主要有以下几个部分构成：定位方块、指示方块、指向三角形。其中指向三角形与指示方块颜色一致代码这一标签指示的方向是正确的，反之为错误的。 视觉标识尺寸为 150*150，材质为 A4 纸彩印，视觉识别标签的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://becks723.github.io/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/right-c.png">
+<meta property="og:image" content="https://becks723.github.io/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/left-c.png">
+<meta property="og:image" content="https://becks723.github.io/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/right-inc.png">
+<meta property="og:image" content="https://becks723.github.io/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/left-inc.png">
+<meta property="og:image" content="https://becks723.github.io/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/usb.png">
+<meta property="og:image" content="https://becks723.github.io/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/guvcview.jpg">
+<meta property="og:image" content="https://becks723.github.io/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/image-20250528221946239.png">
+<meta property="og:image" content="https://becks723.github.io/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/image-20250528222116653.png">
+<meta property="article:published_time" content="2025-05-28T07:27:37.000Z">
+<meta property="article:modified_time" content="2025-05-28T14:21:31.813Z">
+<meta property="article:author" content="Becks723">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://becks723.github.io/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/right-c.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>rm校赛2025 - Welcome to becks723&#39;s blog!</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"becks723.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="rm校赛2025"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-28 15:27" pubdate>
+          2025年5月28日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">rm校赛2025</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="赛规回顾"><a href="#赛规回顾" class="headerlink" title="赛规回顾"></a>赛规回顾</h1><p>主办方提供一个usb摄像头、一张视觉识别标签。选手需要将摄像头连接电脑，捕捉视觉标签并加以识别。识别结果决定了同队的机器人往哪边的（左&#x2F;右）核心区发送弹丸。</p>
+<h2 id="视觉标签"><a href="#视觉标签" class="headerlink" title="视觉标签"></a>视觉标签</h2><p>视觉识别标签主要有以下几个部分构成：定位方块、指示方块、指向三角形。其中<strong>指向三角形与指示方块颜色一致代码这一标签指示的方向是正确的，反之为错误的</strong>。 视觉标识尺寸为 150*150，材质为 A4 纸彩印，视觉识别标签的具体图形如下：</p>
+<p>右方向正确标签：</p>
+<img src="/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/right-c.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>左方向正确标签：</p>
+<img src="/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/left-c.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>右方向错误标签：</p>
+<img src="/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/right-inc.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>左方向错误标签：</p>
+<img src="/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/left-inc.png" srcset="/img/loading.gif" lazyload class="">
+
+
+
+<blockquote>
+<p>Tips： 若参赛双方均不参加视觉侦查挑战，则跳过该阶段，直接进入对抗阶段。 </p>
+<p>视觉计算平台获取到标识信息后，对其进行处理，若为错误标识，则错误标识 所示方向的另一方为正确标识；若为正确标识，则标识所示方向即为正确方向。 </p>
+<p>视觉侦查挑战的成功与否由黄色弹丸在该阶段结束后的位置正确与否进行判断，以下例举几个情景: </p>
+<p>a. 抽中左方错误标识，机器人向右方核心区投射弹丸，并且弹丸成功进入对 方右侧核心区，判定为挑战成功； </p>
+<p>b. 抽中右方正确标识，机器人向右方核心区投射弹丸，但机器人未投射或投 射弹丸未进入对方右侧核心区，则判定为挑战失败。</p>
+</blockquote>
+<p>**简单来说，如果中间的方块与三角形同色，则方向为三角形指向；异色，则为三角形指向的反向。**不管标签正确与否，最终都需要给下位机发送一个方向&#x2F; 角度数据。</p>
+<h2 id="USB摄像头"><a href="#USB摄像头" class="headerlink" title="USB摄像头"></a>USB摄像头</h2><h1 id="识别思路"><a href="#识别思路" class="headerlink" title="识别思路"></a>识别思路</h1><ol>
+<li>识别三个定位块（如必要按左上、右上、右下的顺序做透视变换）<ol>
+<li>对摄像机拍摄到的整个画面roi处理，聚焦于我们感兴趣的视觉标签。</li>
+<li>根据某些算法依次找到三个定位块，并计算其宽高、中心点、角度误差等数据。</li>
+<li>捏住三个中心点，做透视变换，把（潜在可能倒着、斜着放的）图片回正，并再次roi，即可聚焦于标签中央区域。</li>
+</ol>
+</li>
+<li>对中间的指向块、三角形，比较它们的平均hsv值，若相差较大即可判为异色；否则同色。</li>
+<li>根据指向三角形的三个顶点和直角方向判断最终指向。</li>
+</ol>
+<h1 id="实操记录"><a href="#实操记录" class="headerlink" title="实操记录"></a>实操记录</h1><ul>
+<li><p>一开始觉得这跟识别二维码蛮像的，因为都有三个定位方块。于是试图找现成识别二维码的源码。结果发现在opencv里已经被封装成一个类了 <code>QRCodeDetector</code>，源码太长太臭，看不懂。</p>
+</li>
+<li><p>看的同济<em>TJ-SuperPower战队</em> 视觉培训（BV1dGHZeiEi2）快速认识了一下ubuntu、cmake和opencv，主要是opencv。了解了识别装甲板的最简化流程：读入 &gt; bgr转灰度 &gt; threshold二值化 &gt; findContours找轮廓点 &gt; minAreaRect轮廓点最小外接矩形 &gt; 识别出两个灯条 &gt; 中间的白色数字交给深度学习解决。</p>
+</li>
+<li><p>主播第一步先是识别了静态的视觉标签。</p>
+<ul>
+<li><p>此时判断异色的逻辑还是：分别用红色、蓝色的两个mask掩码原图，这样就有了两张红蓝掩码图，如果这两张图上各存在一个轮廓，判异色；如果只有一张有轮廓，另一张没有，判同色。但在实际的摄像头下，这种方法行不通，一是红、蓝色的hue范围具体是多少无法得知；二是用“掩码图上有无轮廓”作为依据实在简陋。</p>
+</li>
+<li><p>第一版没有用到<code>minAreaRect</code>函数勾画外接矩形，而是全程使用<code>approxPolyDP</code>拟合形状。不知道两者孰优孰劣</p>
+</li>
+<li><p>第一版没有意识到错误的标签其实是指向反向的，因此遇到错误标签会直接输出“Incorrect image”。</p>
+</li>
+<li><p>代码在项目的<code>main2.cpp</code>中。如果要编译，可将<code>CMakeLists.txt</code>中</p>
+</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">add_executable</span>(main main.cpp ...<br></code></pre></td></tr></table></figure>
+
+<p>​    这一行的<code>main.cpp</code>改成<code>main2.cpp</code>。</p>
+</li>
+<li><p>自从主播到了场地，形势便又发生了变化。面临的困难有：a. 需要熟悉usb摄像头 b. 实际标签上安装了灯管，但捕获的图像不经过处理根本亮的看不清 c. 拍摄的图像远不及原图清晰 d. 需要熟悉串口通信发送端的任务</p>
+<ul>
+<li><p>对于usb摄像头，以下是一些常用操作记录（虚拟机版本 vmware ubuntu22.04.5）：</p>
+<ul>
+<li><p>列出本机连接的摄像头设备（一般本机内置摄像头是&#x2F;dev&#x2F;video0，但奇怪 主播的usb摄像头反而是这个）</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">ls /dev/video*<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>使用cheese摄像头软件捕获（需事先安装包<code>sudo apt install cheese</code>）</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">cheese<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>使用ffplay捕获（需事先安装包<code>sudo apt install ffmpeg</code>）</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">ffplay /dev/videoX<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>使用 guvcview捕获（需事先安装包<code>sudo apt install guvcview</code>）</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">guvcview<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>使用 v4l-utils查看视频参数等（需事先安装包<code>sudo apt install v4l-utils</code>）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">v4l2-ctl --list-devices      <span class="hljs-comment"># 列出所有摄像头设备</span><br>v4l2-ctl --list-formats-ext  <span class="hljs-comment"># 查看摄像头设备支持的格式</span><br>v4l2-ctl -d /dev/videoX -l   <span class="hljs-comment"># 查看指定设备的参数</span><br>v4l2-ctl -d /dev/videoX --set-ctrl=&lt;参数名&gt;=&lt;值&gt;   <span class="hljs-comment"># 设置指定设备的指定参数值</span><br>v4l2-ctl -d /dev/videoX --get-ctrl=&lt;参数名&gt;        <span class="hljs-comment"># 查看指定设备的指定参数值</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>熟悉了连接linux机等操作后，主播却发现捕获的图像始终都不能正常显示，乱码，如下：</p>
+<video src="./rm校赛2025/36896e3395d2a1bd917316989d85853a.mp4" />
+
+<p>不止guvcview，cheese和ffmpeg也不管用。淘宝客服也不造。瞎折腾了一番，最终主播发现 <strong>把虚拟机usb协议改成3.1</strong>有用（默认是usb2.0，但是摄像头参数上明写着usb2.0，挠头）：</p>
+<img src="/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/usb.png" srcset="/img/loading.gif" lazyload class="">
+
+
+
+</li>
+<li><p>下一个挑战是灯光导致的过曝问题。可通过调节相机曝光度解决，首先需要关闭自动曝光，再调节具体的值。以下是两种方法：</p>
+<ul>
+<li><p>法一：图形化界面<code>guvcview</code></p>
+<img src="/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/guvcview.jpg" srcset="/img/loading.gif" lazyload class="">
+
+<p>摄像机不在身边，找了张网图，曝光在 <code>Image Controls &gt; 拉到最底下 exposure相关的条目</code>。</p>
+</li>
+<li><p>法二：命令行工具<code>v4l-utils</code></p>
+<p>先查看参数，记住自动曝光和曝光值的参数名称</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">v4l2-ctl -d /dev/video0 -l<br></code></pre></td></tr></table></figure>
+
+<p>显示如下，名字可能不同</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># ...</span><br>exposure_auto (menu) : min=0 max=3 default=3 value=3<br>                       0: Manual Mode<br>                       1: Auto Mode<br>exposure_absolute (int) : min=5 max=5000 value=313 step=1<br><span class="hljs-comment"># ...</span><br></code></pre></td></tr></table></figure>
+
+<p>再设置值，关闭自动曝光（3改成1）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">v4l2-ctl -d /dev/video0 --set-ctrl=exposure_auto=1<br></code></pre></td></tr></table></figure>
+
+<p>调节曝光度值（实际默认值为313，主播调到了100以下，大约在80~100这个范围）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">v4l2-ctl -d /dev/video0 --set-ctrl=exposure_absolute=90<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>以及实际拍摄质量远比原图恶劣的问题。解决思路是尽量不依靠具体值（如：方块面积、宽高，颜色等），而是依靠多个元素之间的关系，放在代码中表现在：</p>
+<ul>
+<li>定位方块是正方形，宽高比应在容忍值之内（.2）。</li>
+<li>三个定位方块应大小一致，取宽度比较应在容忍值内。</li>
+<li>三个定位方块的倾斜角度应一致，取两两夹角应在容忍值内（5°）。</li>
+<li>三个定位方块的中心应构成一个等腰直角三角形。这点很重要。</li>
+<li>指向方块和三角形的mean hsv应大致相似，在容忍值内。</li>
+<li>……</li>
+</ul>
+</li>
+<li><p>串口通信主机发送的任务。主播从电控组那儿拿到一个usb串口模块，以及机械组说只需要发送一个方向信息，角度他们已经提前计算好了，倒省了不少力气。最终代码在<code>tasks/serialsender.cpp</code>中。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="程序参数"><a href="#程序参数" class="headerlink" title="程序参数"></a>程序参数</h1><ul>
+<li><p>虚拟机环境：vmware Ubuntu22.04.5</p>
+</li>
+<li><p>编译环境：vscode 1.99.3, g++ (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0, OpenCV 4.5.4, cmake 3.22.1</p>
+</li>
+<li><p>编译方法</p>
+<ol>
+<li><code>ctrl+shift+P</code>调出命令面板，选择 CMake:Configure，再选择g++编译</li>
+<li>f7编译</li>
+<li>运行 <code>./build/main [参数1] [参数2] ...</code></li>
+</ol>
+</li>
+<li><p>运行截图</p>
+<img src="/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/image-20250528221946239.png" srcset="/img/loading.gif" lazyload class="">
+
+<img src="/2025/05/28/rm%E6%A0%A1%E8%B5%9B2025/image-20250528222116653.png" srcset="/img/loading.gif" lazyload class=""></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>rm校赛2025</div>
+      <div>https://becks723.github.io/2025/05/28/rm校赛2025/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Becks723</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/06/10/vscode-IntelliSense%E6%89%BE%E4%B8%8D%E5%88%B0%E5%8C%85%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="vscode IntelliSense找不到包的解决方法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">vscode IntelliSense找不到包的解决方法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/05/27/gmp/" title="gmp">
+                        <span class="hidden-mobile">gmp</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
