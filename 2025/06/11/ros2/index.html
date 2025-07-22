@@ -27,8 +27,11 @@
 <meta property="og:description" content="功能包（pkg）一个功能包可以被认为是ROS2代码的容器。如果希望能够管理代码或与他人共享代码，那么需要将其组织在一个包中。通过包，可以发布ROS2工作，并允许其他人轻松地构建和使用它。 功能包 和 程序 的关系一个功能包里可以包含多个程序。这些程序分成不同职责，共同构成一个功能包的完整功能。通过cmake可控制多个可执行文件： 12345# ...add_executable(program1">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://becks723.github.io/2025/06/11/ros2/image-20250611204247010.png">
+<meta property="og:image" content="https://becks723.github.io/2025/06/11/ros2/image-20250628050334724.png">
+<meta property="og:image" content="https://becks723.github.io/2025/06/11/ros2/robot_state_publisher.png">
+<meta property="og:image" content="https://becks723.github.io/2025/06/11/ros2/image-20250710155736756.png">
 <meta property="article:published_time" content="2025-06-11T12:19:53.000Z">
-<meta property="article:modified_time" content="2025-06-11T13:51:19.944Z">
+<meta property="article:modified_time" content="2025-07-20T08:18:07.217Z">
 <meta property="article:author" content="Becks723">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://becks723.github.io/2025/06/11/ros2/image-20250611204247010.png">
@@ -226,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          552 字
+          2.1k 字
         
       </span>
     
@@ -237,7 +240,7 @@
         
         
         
-          5 分钟
+          18 分钟
         
       </span>
     
@@ -283,8 +286,7 @@
 <h2 id="功能包-和-程序-的关系"><a href="#功能包-和-程序-的关系" class="headerlink" title="功能包 和 程序 的关系"></a>功能包 和 程序 的关系</h2><p>一个功能包里可以包含多个程序。这些程序分成不同职责，共同构成一个功能包的完整功能。通过cmake可控制多个可执行文件：</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-comment"># ...</span><br><span class="hljs-keyword">add_executable</span>(program1 src/program1.cpp ...)<br><span class="hljs-comment"># ...</span><br><span class="hljs-keyword">add_executable</span>(program2 src/program2.cpp ...)<br><span class="hljs-comment"># ...</span><br></code></pre></td></tr></table></figure>
 
-
-
+<h2 id="程序-和-节点-的关系"><a href="#程序-和-节点-的关系" class="headerlink" title="程序 和 节点 的关系"></a>程序 和 节点 的关系</h2><p>一个程序（对应一个main函数）里一般性跑一个节点，因为<code>spin</code>一个节点是阻塞线程的操作。当然你可以异步跑多个节点，但不常用。</p>
 <h2 id="创建并运行一个功能包"><a href="#创建并运行一个功能包" class="headerlink" title="创建并运行一个功能包"></a>创建并运行一个功能包</h2><ol>
 <li>使用如下命令在当前目录下创建一个ros2包：</li>
 </ol>
@@ -333,6 +335,246 @@
 
 <p>示例中即为：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ros2 run demo_cpp_pkg main<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="tf2"><a href="#tf2" class="headerlink" title="tf2"></a>tf2</h1><p>（坐标变换工具）</p>
+<h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><img src="/2025/06/11/ros2/image-20250628050334724.png" srcset="/img/loading.gif" lazyload class="" title="image-20250628050334724">
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 发布base_link到base_laser之间的变换</span><br>ros2 run tf2_ros static_transform_publisher --x 0.1 --y 0.0 --z 0.2 --roll 0.0 --pitch 0.0 --yaw 0.0 --frame-id base_link --child-frame-id base_laser<br><br><span class="hljs-comment"># 发布base_laser到wall_point之间的变换</span><br>ros2 run tf2_ros static_transform_publisher --x 0.3 --y 0.0 --z 0.0 --roll 0.0 --pitch 0.0 --yaw 0.0 --frame-id base_laser --child-frame-id wall_point<br><br><span class="hljs-comment"># 查询base_link 到wall_point之间的关系</span><br>ros2 run tf2_ros tf2_echo [source_frame] [target_frame]<br><span class="hljs-comment"># 即：</span><br>ros2 run tf2_ros tf2_echo base_link wall_point<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="urdf"><a href="#urdf" class="headerlink" title="urdf"></a>urdf</h1><p>(Unified Robot Description Format)</p>
+<p>urdf是一种用于表示&#x2F;仿真机器人模型的XML格式。</p>
+<p>下面是 <strong>URDF 中常见的标签</strong>及其作用简明总览，分为<strong>核心结构</strong>、<strong>几何与外观</strong>、<strong>运动与连接</strong>三大类：</p>
+<hr>
+<h2 id="一、核心结构标签"><a href="#一、核心结构标签" class="headerlink" title="一、核心结构标签"></a>一、核心结构标签</h2><table>
+<thead>
+<tr>
+<th>标签</th>
+<th>说明</th>
+<th>示例&#x2F;备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;robot&gt;</code></td>
+<td>所有 URDF 的根标签，定义机器人名称</td>
+<td><code>&lt;robot name=&quot;my_bot&quot;&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;link&gt;</code></td>
+<td>描述一个部件（如一个刚体）</td>
+<td>机器人上每个零件都需定义为一个 link</td>
+</tr>
+<tr>
+<td><code>&lt;joint&gt;</code></td>
+<td>描述两个 link 之间的连接关系</td>
+<td>定义运动、旋转、固定等</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="二、几何与外观标签（在-、、-中使用）"><a href="#二、几何与外观标签（在-、、-中使用）" class="headerlink" title="二、几何与外观标签（在 &lt;visual&gt;、&lt;collision&gt;、&lt;inertial&gt; 中使用）"></a>二、几何与外观标签（在 <code>&lt;visual&gt;</code>、<code>&lt;collision&gt;</code>、<code>&lt;inertial&gt;</code> 中使用）</h2><table>
+<thead>
+<tr>
+<th>标签</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;visual&gt;</code></td>
+<td>link 的可视化外观</td>
+<td>RViz2 中展示用</td>
+</tr>
+<tr>
+<td><code>&lt;collision&gt;</code></td>
+<td>link 的碰撞体</td>
+<td>用于仿真、碰撞检测</td>
+</tr>
+<tr>
+<td><code>&lt;inertial&gt;</code></td>
+<td>link 的惯性信息</td>
+<td>包括质量、惯性矩、质心等</td>
+</tr>
+<tr>
+<td><code>&lt;origin&gt;</code></td>
+<td>坐标原点偏移，定义相对于父元素的位置和姿态</td>
+<td><code>&lt;origin xyz=&quot;0 0 1&quot; rpy=&quot;0 0 0&quot;/&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;geometry&gt;</code></td>
+<td>定义几何形状（与 <code>visual</code>、<code>collision</code> 配合）</td>
+<td>包含 box、cylinder、sphere、mesh</td>
+</tr>
+<tr>
+<td><code>&lt;box&gt;</code></td>
+<td>长方体几何</td>
+<td><code>&lt;box size=&quot;1 1 1&quot;/&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;cylinder&gt;</code></td>
+<td>圆柱体几何</td>
+<td><code>&lt;cylinder length=&quot;1&quot; radius=&quot;0.5&quot;/&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;sphere&gt;</code></td>
+<td>球体几何</td>
+<td><code>&lt;sphere radius=&quot;0.3&quot;/&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;mesh&gt;</code></td>
+<td>加载外部模型文件（如 <code>.dae</code>, <code>.stl</code>）</td>
+<td><code>&lt;mesh filename=&quot;package://path/model.dae&quot;/&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;material&gt;</code></td>
+<td>材质颜色或纹理</td>
+<td><code>&lt;material name=&quot;gray&quot;&gt;&lt;color rgba=&quot;0.5 0.5 0.5 1&quot;/&gt;&lt;/material&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;color&gt;</code></td>
+<td>定义颜色值</td>
+<td>RGBA 四维（透明度在最后）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="三、连接与运动标签（joint-内部）"><a href="#三、连接与运动标签（joint-内部）" class="headerlink" title="三、连接与运动标签（joint 内部）"></a>三、连接与运动标签（joint 内部）</h2><table>
+<thead>
+<tr>
+<th>标签</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;parent&gt;</code></td>
+<td>父 link 名称</td>
+<td><code>&lt;parent link=&quot;base_link&quot;/&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;child&gt;</code></td>
+<td>子 link 名称</td>
+<td><code>&lt;child link=&quot;wheel_link&quot;/&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;axis&gt;</code></td>
+<td>关节运动的轴向</td>
+<td><code>&lt;axis xyz=&quot;0 0 1&quot;/&gt;</code> 表示绕 Z 轴</td>
+</tr>
+<tr>
+<td><code>&lt;limit&gt;</code></td>
+<td>关节限制（适用于 revolute&#x2F;prismatic）</td>
+<td><code>&lt;limit lower=&quot;-1.57&quot; upper=&quot;1.57&quot; effort=&quot;1&quot; velocity=&quot;1&quot;/&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;dynamics&gt;</code></td>
+<td>摩擦&#x2F;阻尼等动态参数</td>
+<td>可选，增强仿真精度</td>
+</tr>
+<tr>
+<td><code>&lt;type&gt;</code></td>
+<td>关节类型</td>
+<td><code>revolute</code>, <code>continuous</code>, <code>prismatic</code>, <code>fixed</code>, <code>floating</code>, <code>planar</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="四、其它辅助标签（常用但非必须）"><a href="#四、其它辅助标签（常用但非必须）" class="headerlink" title="四、其它辅助标签（常用但非必须）"></a>四、其它辅助标签（常用但非必须）</h2><table>
+<thead>
+<tr>
+<th>标签</th>
+<th>用途</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;transmission&gt;</code></td>
+<td>与控制器配合使用</td>
+<td>在控制机器人时才需要</td>
+</tr>
+<tr>
+<td><code>&lt;gazebo&gt;</code></td>
+<td>Gazebo 特定配置（带插件）</td>
+<td>与仿真配合用</td>
+</tr>
+<tr>
+<td><code>&lt;xacro:macro&gt;</code></td>
+<td>Xacro 宏定义</td>
+<td>重复结构抽象</td>
+</tr>
+<tr>
+<td><code>&lt;xacro:property&gt;</code></td>
+<td>定义变量</td>
+<td>用于参数传递或配置</td>
+</tr>
+</tbody></table>
+<h1 id="xacro"><a href="#xacro" class="headerlink" title="xacro"></a>xacro</h1><p>(Xml Macro)</p>
+<p>ROS还提供了用于简化urdf编写的xacro格式。文件后缀名<code>.xacro</code>。编写好文件后不能直接使用，应先转成urdf格式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装xacro包</span><br><span class="hljs-built_in">sudo</span> apt install ros-<span class="hljs-variable">$ROS_DISTRO</span>-xacro<br><br><span class="hljs-comment"># 转换成urdf</span><br>xacro &lt;macro文件名&gt;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="在RViz中显示机器人"><a href="#在RViz中显示机器人" class="headerlink" title="在RViz中显示机器人"></a>在RViz中显示机器人</h1><p>当我们编写好urdf&#x2F;xacro机器人描述文件后，rviz并不能自动地去识别不同部件的坐标变换关系。实际上，urdf和rivz中间的桥梁是由<code>robot_state_publisher</code>包（和<code>joint_state_publisher</code>包）搭建起来的。</p>
+<img src="/2025/06/11/ros2/robot_state_publisher.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>如上图的关系所示，<code>robot_state_publisher</code>包解析urdf中的tf变换关系。遇到静态tf（如定义为fixed的joint）通过<code>/tf_static</code>话题发布；遇到动态tf关系，先发布到<code>/robot_description</code>话题，另一边被<code>joint_state_publisher</code>包订阅，自动扫描动态的关节，并将其数值发布到<code>/joint_states</code>话题，最后<code>robot_state_publisher</code>包收到后，通过<code>/tf</code>话题发布。</p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li>要想urdf加载进rviz，应该编写一个launch文件。在launch目录下新建一个<code>display.launch.py</code>，内容大致如下（大同小异，理解为主，切勿无脑照抄）：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> launch <span class="hljs-keyword">import</span> LaunchDescription<br><span class="hljs-keyword">from</span> launch_ros.actions <span class="hljs-keyword">import</span> Node<br><span class="hljs-keyword">from</span> launch.substitutions <span class="hljs-keyword">import</span> Command, FindExecutable<br><span class="hljs-keyword">from</span> ament_index_python.packages <span class="hljs-keyword">import</span> get_package_share_directory<br><span class="hljs-keyword">import</span> os<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">generate_launch_description</span>():<br>    <span class="hljs-comment"># 获取urdf路径</span><br>    urdf_file = os.path.join(<br>        get_package_share_directory(<span class="hljs-string">&quot;gimbal&quot;</span>),<br>        <span class="hljs-string">&quot;urdf&quot;</span>,<br>        <span class="hljs-string">&quot;gimbal.urdf.xacro&quot;</span><br>    ) <br><br>    <span class="hljs-comment"># xacro转urdf（通过xacro &lt;xacro文件路径&gt; 命令）</span><br>    urdf_content = Command([<br>        FindExecutable(name=<span class="hljs-string">&quot;xacro&quot;</span>),<br>        <span class="hljs-string">&quot; &quot;</span>,<br>        urdf_file<br>    ])<br><br>    <span class="hljs-keyword">return</span> LaunchDescription([<br>        <span class="hljs-comment"># robot_state_publisher节点</span><br>        Node(<br>            package=<span class="hljs-string">&quot;robot_state_publisher&quot;</span>,<br>            executable=<span class="hljs-string">&quot;robot_state_publisher&quot;</span>,<br>            parameters=[<br>                &#123; <span class="hljs-string">&quot;robot_description&quot;</span>: urdf_content &#125;<br>            ]<br>        ),<br>        <span class="hljs-comment"># joint_state_publisher节点</span><br>        Node(<br>            package=<span class="hljs-string">&quot;joint_state_publisher&quot;</span>,<br>            executable=<span class="hljs-string">&quot;joint_state_publisher&quot;</span><br>        ),<br>        <span class="hljs-comment"># RViz2节点</span><br>        Node(<br>            package=<span class="hljs-string">&quot;rviz2&quot;</span>,<br>            executable=<span class="hljs-string">&quot;rviz2&quot;</span>,<br>        )<br>    ])<br></code></pre></td></tr></table></figure>
+
+
+
+<ol start="2">
+<li><p>修改CMakeLists.txt，添加<code>install</code>命令，部署目录</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-comment"># ...</span><br><br><span class="hljs-comment"># 将必要的目录（launch, urdf等）部署到share目录下</span><br><span class="hljs-keyword">install</span>(DIRECTORY<br>  launch<br>  urdf<br>  DESTINATION share/<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span>/)<br><br><span class="hljs-comment"># ...</span><br></code></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>编译并部署</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">colcon build<br><span class="hljs-built_in">source</span> install/setup.bash<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>通过launch文件启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ros2 launch &lt;功能包名&gt; display.launch.py<br></code></pre></td></tr></table></figure>
+
+<p>RViz将自动启动。</p>
+</li>
+<li><p>在RViz内进一步调整：</p>
+<ol>
+<li><p><code>Fixed Frame</code>默认为<code>world</code>，需要手动切换成你urdf的根部件（如<code>base_link</code>）</p>
+</li>
+<li><p>切换好以后很大概率<strong>机器人模型依旧加载不出来，只显示坐标轴</strong>。如下图：</p>
+<img src="/2025/06/11/ros2/image-20250710155736756.png" srcset="/img/loading.gif" lazyload class="">
+
+<p><strong>解决方法</strong>是：点开左下角Add - 添加RobotModel可视化 - 手动选择<code>Description Topic</code>下拉框中的<code>/robot_description</code>话题让rviz重新加载</p>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="自定义消息类型XXX-msg"><a href="#自定义消息类型XXX-msg" class="headerlink" title="自定义消息类型XXX.msg"></a>自定义消息类型<code>XXX.msg</code></h1><p>ROS2中有许多内置的包，如<code>std_msgs</code>和 <code>geometry_msgs</code>，它们都有自己的消息类型用于节点间传输。当我们有这样的需求时也可自定义消息类型，步骤如下：</p>
+<ol>
+<li><p>自定义消息最好<strong>单开一个功能包</strong>存放，以便实现复用。当然如果你项目小的话挤在一个包里也行，看具体需求。这里我要声明装甲板相关的消息，因此创建一个叫<code>armor_interface</code>的包。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ros2 pkg create armor_interface --build-type ament_cmake ...<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>一个消息类型其实就是一个<code>XXX.msg</code>文件。在包目录下新建<code>msg</code>文件夹，添加下面两个文件：</p>
+<ol>
+<li><p><code>Armor.msg</code>：表示一个装甲板</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs delphi"><span class="hljs-keyword">string</span> <span class="hljs-keyword">name</span><br><span class="hljs-keyword">string</span> color<br><span class="hljs-keyword">string</span> <span class="hljs-keyword">type</span><br>geometry_msgs/Vector3 rvec<br>geometry_msgs/Pose pose<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>Armors.msg</code>：表示多个装甲板的集合，用于传输</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs css">std_msgs/<span class="hljs-selector-tag">Header</span> <span class="hljs-selector-tag">header</span><br>Armor<span class="hljs-selector-attr">[]</span> data<br></code></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>修改CMakeLists.txt：</p>
+<ol>
+<li><p>添加必要的包</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">find_package</span>(rosidl_default_generators REQUIRED)  <span class="hljs-comment"># 编译器自动识别msg文件并编译成代码</span><br><span class="hljs-keyword">find_package</span>(std_msgs REQUIRED)<br><span class="hljs-keyword">find_package</span>(geometry_msgs REQUIRED)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>生成自定义消息的CMake命令 <code>rosidl_generate_interfaces</code>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cmake">rosidl_generate_interfaces(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span><br>  <span class="hljs-string">&quot;msg/Armor.msg&quot;</span><br>  <span class="hljs-string">&quot;msg/Armors.msg&quot;</span><br>  <br>  DEPENDENCIES <br>    std_msgs <br>    geometry_msgs<br>)<br></code></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>修改<code>package.xml</code>：</p>
+<p>往<code>package.xml</code>添加一行（不然不给编译）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml">   <span class="hljs-tag">&lt;<span class="hljs-name">member_of_group</span>&gt;</span>rosidl_interface_packages<span class="hljs-tag">&lt;/<span class="hljs-name">member_of_group</span>&gt;</span><br><br>5. 编译&amp;部署包<br><br>   ```bash<br>   colcon build<br>   source install/setup.bash<br></code></pre></td></tr></table></figure></li>
 </ol>
 
                 
