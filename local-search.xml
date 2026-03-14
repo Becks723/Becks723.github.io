@@ -4,6 +4,32 @@
   
   
   <entry>
+    <title>mockery</title>
+    <link href="/2026/03/14/mockery/"/>
+    <url>/2026/03/14/mockery/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Mockery-Golang-Mock框架"><a href="#Mockery-Golang-Mock框架" class="headerlink" title="Mockery - Golang Mock框架"></a>Mockery - Golang Mock框架</h1><h1 id="资源-文章"><a href="#资源-文章" class="headerlink" title="资源 &amp; 文章"></a>资源 &amp; 文章</h1><ul><li>Mockery开源：<a href="https://github.com/vektra/mockery">https://github.com/vektra/mockery</a></li></ul><h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>golang测试踩坑</title>
+    <link href="/2026/03/14/golang%E6%B5%8B%E8%AF%95%E8%B8%A9%E5%9D%91/"/>
+    <url>/2026/03/14/golang%E6%B5%8B%E8%AF%95%E8%B8%A9%E5%9D%91/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Golang-测试踩坑与心得"><a href="#Golang-测试踩坑与心得" class="headerlink" title="Golang 测试踩坑与心得"></a>Golang 测试踩坑与心得</h1><h1 id="资源-文章"><a href="#资源-文章" class="headerlink" title="资源 &amp; 文章"></a>资源 &amp; 文章</h1><ul><li><p>Golang单元测试指引：<a href="https://zhuanlan.zhihu.com/p/267341653">https://zhuanlan.zhihu.com/p/267341653</a></p></li><li><p>字节团队mockey文章：<a href="https://juejin.cn/post/7283037880086708258">https://juejin.cn/post/7283037880086708258</a></p></li><li><p>字节mockey介绍：<a href="https://juejin.cn/post/7159568574699274248">https://juejin.cn/post/7159568574699274248</a></p></li><li><p>字节mockey仓库：<a href="https://github.com/bytedance/mockey">https://github.com/bytedance/mockey</a></p></li><li><p>mockery仓库：<a href="https://github.com/vektra/mockery">https://github.com/vektra/mockery</a></p></li></ul><h1 id="框架选择"><a href="#框架选择" class="headerlink" title="框架选择"></a>框架选择</h1><p>市面上形形色色的测试框架眼花缭乱，虽然功能强大，但是选择起来也不是可以乱选的。应该先了解自己的测试场景，再选择合适的框架。</p><p>首先明确，抛开原生的go标准库测试包<code>testing</code>不谈，测试框架分为几类：</p><ul><li>Assertion 断言框架</li><li>Mock 框架</li><li>等等</li></ul><p>主流方式是：每个类别选择一个框架，再结合原生<code>testing</code>进行测试代码的编写。</p><p>如果要推荐的话：</p><ol><li>mockey + goconvey + 原生库</li><li>mockery + testify + 原生库</li></ol><h2 id="原生testing包"><a href="#原生testing包" class="headerlink" title="原生testing包"></a>原生testing包</h2><p>原生支持，但什么都得自己写。</p><h2 id="Assertion框架"><a href="#Assertion框架" class="headerlink" title="Assertion框架"></a>Assertion框架</h2><h3 id="testify"><a href="#testify" class="headerlink" title="testify"></a>testify</h3><h3 id="goconvey"><a href="#goconvey" class="headerlink" title="goconvey"></a>goconvey</h3><h2 id="Mock框架"><a href="#Mock框架" class="headerlink" title="Mock框架"></a>Mock框架</h2><h3 id="Mock流派"><a href="#Mock流派" class="headerlink" title="Mock流派"></a>Mock流派</h3><p>Mock分为两种流派：</p><ul><li>运行时打桩（Monkey Patching）：在测试<strong>运行时动态地</strong>替换方法、成员函数、变量，无需 interface，无需提前生成mock。代表框架有 monkey 和字节的 mockey。</li><li>代码生成（mockgen）：生成 interface 的 mock代码的工具，依赖注入mock，是<strong>编译时生成，是静态的</strong>。代表有 mockery 等。</li></ul><p>这两种流派是<strong>不兼容的</strong>，意味着选择一种就要抛弃另一种。</p><h3 id="字节mockey"><a href="#字节mockey" class="headerlink" title="字节mockey"></a>字节mockey</h3><p>字节开源的一款 monkey类mock 框架，无需生成代码，无需特地编写mock对象，拿起来就用。<em>“不需要依赖注入，直接 mock 内存”</em>。</p><p>通过 <code>Mock</code> api 实现动态地mock，缺点是<strong>无法mock interface</strong>，只能mock 具体成员函数 或 全局函数 或 变量。</p><img src="/2026/03/14/golang%E6%B5%8B%E8%AF%95%E8%B8%A9%E5%9D%91/mockey1.png" class=""><p>另外，mockey的文档中推荐了 <strong>goconvey</strong> 作为搭配的断言框架。</p><h3 id="monkey"><a href="#monkey" class="headerlink" title="monkey"></a>monkey</h3><p>没用过</p><h3 id="mockery"><a href="#mockery" class="headerlink" title="mockery"></a>mockery</h3><p>应该是最流行的 mock框架，官网介绍很多大项目都在用，如kubernetes。它是生成代码式框架，并且<strong>只能mock interface</strong>，普通的struct就不好mock了。</p><p>使用 mockery 时需要先安装它的CLI工具，编写yaml配置（命令行参数也可以），再生成mock代码。mockery 提供了对 testify 的内部支持，可以搭配 testify 使用。</p><h1 id="go-test-命令"><a href="#go-test-命令" class="headerlink" title="go test 命令"></a>go test 命令</h1><ul><li><code>./...</code>：递归查找该目录下所有<code>*_test.go</code>文件。</li><li><code>.</code>：仅测试当前包</li><li><code>-v</code>：输出详细日志</li><li><code>-cover</code>：输出覆盖率</li><li><code>-coverprofile=coverage.out</code>：输出覆盖率到<code>coverage.out</code>文件<ul><li><code>go tool cover -html=coverage.out</code>：html可视化覆盖率</li></ul></li></ul><h1 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h1><h2 id="mockey无法mock-interface？"><a href="#mockey无法mock-interface？" class="headerlink" title="mockey无法mock interface？"></a>mockey无法mock interface？</h2><p>答：确实。mockey只能 mock 具体的type，也就是interface的 <strong>underlying struct</strong>。</p><p>有人提了<a href="https://github.com/bytedance/mockey/issues/3">issue</a>，但四年了还open着。</p><p>那我的依赖如果是interface就无法mock了吗？</p><p>不是，可以通过反射找到concrete type的concrete method。官网仓库FAQ里提到了这点：<a href="https://github.com/bytedance/mockey?tab=readme-ov-file#how-to-mock-interface-types">How to mock interface types?</a></p><h2 id="mockey如何-mock-泛型方法？"><a href="#mockey如何-mock-泛型方法？" class="headerlink" title="mockey如何 mock 泛型方法？"></a>mockey如何 mock 泛型方法？</h2><p><code>mockey.Mock</code> 无法对泛型生效；应该使用<code>mockey.MockGeneric</code>。</p><h2 id="内联优化"><a href="#内联优化" class="headerlink" title="内联优化"></a>内联优化</h2><p>使用 mockey 时应该关闭golang的内联优化，对<code>go test</code>添加参数：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">-gcflags=<span class="hljs-string">&quot;all=-N -l&quot;</span><br></code></pre></td></tr></table></figure><p>使用 monkey patching 类的mock框架都应该关闭内联优化，防止函数运行时替换不成功。</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>mysql</title>
     <link href="/2025/10/07/mysql/"/>
     <url>/2025/10/07/mysql/</url>
