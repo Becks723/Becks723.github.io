@@ -4,6 +4,32 @@
   
   
   <entry>
+    <title>使用SSH在宿主机上操作虚拟机</title>
+    <link href="/2026/03/28/%E4%BD%BF%E7%94%A8SSH%E5%9C%A8%E5%AE%BF%E4%B8%BB%E6%9C%BA%E4%B8%8A%E6%93%8D%E4%BD%9C%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    <url>/2026/03/28/%E4%BD%BF%E7%94%A8SSH%E5%9C%A8%E5%AE%BF%E4%B8%BB%E6%9C%BA%E4%B8%8A%E6%93%8D%E4%BD%9C%E8%99%9A%E6%8B%9F%E6%9C%BA/</url>
+    
+    <content type="html"><![CDATA[<h1 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h1><p>我们在虚拟机软件如 VMware 或者 VirtualBox 上安装虚拟机运行服务器。使用一段时间以后，我们可能会厌烦通过虚拟机软件自带的控制台窗口操作服务器，它确实带来一些不便，比如：</p><ul><li>剪贴板不互通，向复制一段报错信息问llm都不顺手</li><li>自带的控制台窗口一旦focus，就无法轻易地快捷键切应用回宿主机</li><li>等等<br>我们会想，要是有方法<strong>在自己的宿主机命令行下操作我的虚拟机</strong>就好了。那么，ssh就能很好的满足我们的需求。</li></ul><h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><ol><li><p>虚拟机上安装<code>openssh-server</code>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install openssh-server<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> ssh<br><span class="hljs-built_in">sudo</span> systemctl start ssh<br><span class="hljs-built_in">sudo</span> systemctl status ssh <span class="hljs-comment"># 检查运行状态，应显示active</span><br></code></pre></td></tr></table></figure></li><li><p>虚拟机软件开启端口转发。<br>以 VirtualBox 为例，设置 - 网络 - NAT - 端口转发，<br> 添加端口转发规则：</p><ul><li>名称：ssh</li><li>协议：TCP</li><li>主机端口：&lt;你的主机端口&gt;</li><li>子系统端口：22（<strong>ssh默认监听22端口</strong>）<br>这里我有三台虚拟机，因此主机端口依次设置为<code>2222</code>, <code>2223</code>, <code>2224</code>。</li></ul></li><li><p>宿主机运行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh &lt;虚拟机用户名&gt;@localhost -p &lt;设置的主机端口&gt;<br></code></pre></td></tr></table></figure></li><li><p>第一次运行会显示类似<code>key fingerprints xxx are unknown</code>的提示，输入<code>yes</code>信任即可。之后会让你输入服务器密码，也就是你虚拟机设置的密码登录，就能在宿主机上控制服务器了！</p></li></ol>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>eino</title>
+    <link href="/2026/03/19/eino/"/>
+    <url>/2026/03/19/eino/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>mockery</title>
     <link href="/2026/03/14/mockery/"/>
     <url>/2026/03/14/mockery/</url>
