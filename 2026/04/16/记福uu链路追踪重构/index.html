@@ -19,15 +19,15 @@
   <meta name="author" content="Becks723">
   <meta name="keywords" content="">
   
-    <meta name="description" content="问题背景我们在虚拟机软件如 VMware 或者 VirtualBox 上安装虚拟机运行服务器。使用一段时间以后，我们可能会厌烦通过虚拟机软件自带的控制台窗口操作服务器，它确实带来一些不便，比如：  剪贴板不互通，向复制一段报错信息问llm都不顺手 自带的控制台窗口一旦focus，就无法轻易地快捷键切应用回宿主机 等等我们会想，要是有方法在自己的宿主机命令行下操作我的虚拟机就好了。那么，ssh就能很">
+    <meta name="description" content="记——福uu链路追踪重构埋点所谓埋点（instrumentation），就是往你代码里加点逻辑（通常调调api就行），使得可观测平台（e.g. OpenTelemetry）能够从你的程序中导出需要监控的数据（学名：遥测数据），分为：链路（traces）、指标（metrics）、日志（logs），后续就是将数据呈现在看板上，实现可观测性。 分为手动埋点和调用埋点库埋点。  手动埋点：自己调 Otel">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用SSH在宿主机上操作虚拟机">
-<meta property="og:url" content="https://becks723.github.io/2026/03/28/%E4%BD%BF%E7%94%A8SSH%E5%9C%A8%E5%AE%BF%E4%B8%BB%E6%9C%BA%E4%B8%8A%E6%93%8D%E4%BD%9C%E8%99%9A%E6%8B%9F%E6%9C%BA/index.html">
+<meta property="og:title" content="记福uu链路追踪重构">
+<meta property="og:url" content="https://becks723.github.io/2026/04/16/%E8%AE%B0%E7%A6%8Fuu%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA%E9%87%8D%E6%9E%84/index.html">
 <meta property="og:site_name" content="Welcome to becks723&#39;s blog!">
-<meta property="og:description" content="问题背景我们在虚拟机软件如 VMware 或者 VirtualBox 上安装虚拟机运行服务器。使用一段时间以后，我们可能会厌烦通过虚拟机软件自带的控制台窗口操作服务器，它确实带来一些不便，比如：  剪贴板不互通，向复制一段报错信息问llm都不顺手 自带的控制台窗口一旦focus，就无法轻易地快捷键切应用回宿主机 等等我们会想，要是有方法在自己的宿主机命令行下操作我的虚拟机就好了。那么，ssh就能很">
+<meta property="og:description" content="记——福uu链路追踪重构埋点所谓埋点（instrumentation），就是往你代码里加点逻辑（通常调调api就行），使得可观测平台（e.g. OpenTelemetry）能够从你的程序中导出需要监控的数据（学名：遥测数据），分为：链路（traces）、指标（metrics）、日志（logs），后续就是将数据呈现在看板上，实现可观测性。 分为手动埋点和调用埋点库埋点。  手动埋点：自己调 Otel">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-03-28T11:50:12.000Z">
-<meta property="article:modified_time" content="2026-03-28T11:51:37.282Z">
+<meta property="article:published_time" content="2026-04-16T14:04:52.000Z">
+<meta property="article:modified_time" content="2026-04-21T14:00:25.058Z">
 <meta property="article:author" content="Becks723">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -35,7 +35,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>使用SSH在宿主机上操作虚拟机 - Welcome to becks723&#39;s blog!</title>
+  <title>记福uu链路追踪重构 - Welcome to becks723&#39;s blog!</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="使用SSH在宿主机上操作虚拟机"></span>
+            <span id="subtitle" data-typed-text="记福uu链路追踪重构"></span>
           
         </div>
 
@@ -212,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-03-28 19:50" pubdate>
-          2026年3月28日 晚上
+        <time datetime="2026-04-16 22:04" pubdate>
+          2026年4月16日 晚上
         </time>
       </span>
     
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          362 字
+          1.3k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          4 分钟
+          11 分钟
         
       </span>
     
@@ -272,35 +272,94 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">使用SSH在宿主机上操作虚拟机</h1>
+            <h1 id="seo-header">记福uu链路追踪重构</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h1><p>我们在虚拟机软件如 VMware 或者 VirtualBox 上安装虚拟机运行服务器。使用一段时间以后，我们可能会厌烦通过虚拟机软件自带的控制台窗口操作服务器，它确实带来一些不便，比如：</p>
+                <h1 id="记——福uu链路追踪重构"><a href="#记——福uu链路追踪重构" class="headerlink" title="记——福uu链路追踪重构"></a>记——福uu链路追踪重构</h1><h1 id="埋点"><a href="#埋点" class="headerlink" title="埋点"></a>埋点</h1><p>所谓埋点（instrumentation），就是往你代码里加点逻辑（通常调调api就行），使得可观测平台（e.g. OpenTelemetry）能够从你的程序中导出需要监控的数据（学名：遥测数据），分为：链路（traces）、指标（metrics）、日志（logs），后续就是将数据呈现在看板上，实现可观测性。</p>
+<p>分为<strong>手动埋点</strong>和<strong>调用埋点库埋点</strong>。</p>
 <ul>
-<li>剪贴板不互通，向复制一段报错信息问llm都不顺手</li>
-<li>自带的控制台窗口一旦focus，就无法轻易地快捷键切应用回宿主机</li>
-<li>等等<br>我们会想，要是有方法<strong>在自己的宿主机命令行下操作我的虚拟机</strong>就好了。那么，ssh就能很好的满足我们的需求。</li>
+<li>手动埋点：自己调 Otel sdk 埋点。优点：流程可控、灵活度高；缺点：自己写麻烦</li>
+<li>埋点库：第三方框架往往提供自己的可观测性埋点代码，直接调。优点：标准统一，代码现成；缺点：没啥缺点</li>
 </ul>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><ol>
-<li><p>虚拟机上安装<code>openssh-server</code>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install openssh-server<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> ssh<br><span class="hljs-built_in">sudo</span> systemctl start ssh<br><span class="hljs-built_in">sudo</span> systemctl status ssh <span class="hljs-comment"># 检查运行状态，应显示active</span><br></code></pre></td></tr></table></figure>
-</li>
-<li><p>虚拟机软件开启端口转发。<br>以 VirtualBox 为例，设置 - 网络 - NAT - 端口转发，<br> 添加端口转发规则：</p>
+<p>Otel 官方是<strong>推荐优先第三方埋点库</strong>的，毕竟生态好，市面上的框架都有。</p>
+<p>福uu 需要埋点的地方有：</p>
 <ul>
-<li>名称：ssh</li>
-<li>协议：TCP</li>
-<li>主机端口：&lt;你的主机端口&gt;</li>
-<li>子系统端口：22（<strong>ssh默认监听22端口</strong>）<br>这里我有三台虚拟机，因此主机端口依次设置为<code>2222</code>, <code>2223</code>, <code>2224</code>。</li>
+<li>api网关（http，使用了Hertz框架）</li>
+<li>微服务（rpc，使用了Kitex框架）</li>
+<li>基础设施&#x2F;中间件<ul>
+<li>db（使用 gorm）</li>
+<li>cache（使用 redis）</li>
+<li>cronjob &#x2F; 异步 task（使用自己实现的本地队列 taskqueue）</li>
+<li>jwch&#x2F;yjsy 等外部调用（http）</li>
+<li>…</li>
 </ul>
 </li>
-<li><p>宿主机运行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh &lt;虚拟机用户名&gt;@localhost -p &lt;设置的主机端口&gt;<br></code></pre></td></tr></table></figure>
+</ul>
+<p>现已实现大部分埋点：</p>
+<ul>
+<li>网关+微服务：<a target="_blank" rel="noopener" href="https://github.com/Becks723/fzuhelper-server/commit/f3059b559d7c6ab9d4693272b4d9abe925ef95a8">f3059b5</a></li>
+<li>db + cache：<a target="_blank" rel="noopener" href="https://github.com/Becks723/fzuhelper-server/commit/e0439e64e7fcf1d1436bf76dbce8392ec23a09e3">e0439e6</a></li>
+<li>taskqueue 的定时任务：<a target="_blank" rel="noopener" href="https://github.com/Becks723/fzuhelper-server/commit/07a138a8671e41ed8569d4e0778648c162944cd0">07a138a</a></li>
+</ul>
+<p>还未完成：</p>
+<ul>
+<li>taskqueue 的异步task 部分</li>
+<li>外部调用</li>
+<li>待发现</li>
+</ul>
+<h1 id="Trace-打通-logger"><a href="#Trace-打通-logger" class="headerlink" title="Trace 打通 logger"></a>Trace 打通 logger</h1><p>福uu 服务端实现有自己的 logger (github.com&#x2F;…&#x2F;pkg&#x2F;logger&#x2F;) 。在没有引入监控体系前，调用 logger 的行为是：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">logger.Info(...)<br>logger.Errorf(..., err)<br></code></pre></td></tr></table></figure>
+
+<p>简单的日志打印，没有附加 trace 信息，无法根据日志锁定所属 trace &#x2F; span 等链路信息。</p>
+<p>现已打通 Trace 和 logger，使得在日志中能够附带记录当下这条日志所属 trace（链路）和 span（链路中的节点）。调用 logger 的行为变成：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">logger.WithCtx(ctx).Info(...)<br>logger.WithCtx(ctx).Errorf(..., err)<br></code></pre></td></tr></table></figure>
+
+<p>可以看到，客户代码改的很轻，监控信息通过 <code>context.Context</code> 即可透传进 logger，后者内部解析出 span 上下文，包装成若干额外的 <code>zap.Field</code> ，注入日志打印。<strong>在开发者侧，其实他们并没有，也不需要感知到链路追踪的实现细节</strong>，整个链路信息的记录和日志是程序在背后自动完成的，符合<em>偏基础设施</em>模块的设计准则。</p>
+<h2 id="Error-日志时自动处理当前-span"><a href="#Error-日志时自动处理当前-span" class="headerlink" title="Error 日志时自动处理当前 span"></a>Error 日志时自动处理当前 span</h2><p>我们的需求是：</p>
+<blockquote>
+<p>如果链路中出现了错误，我们想记录这个错误，使之能在监控看板上反映出来，方便排查。</p>
+</blockquote>
+<p>那么 logger 系统就是一个很好的切入点：将某个阈值 level 以上的日志，算作链路报错，自动将它所属的 span 标红，就能记录错误到监控后端。</p>
+<p>大致代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(l *logger)</span></span> log(lvl LogLevel, msg <span class="hljs-type">string</span>) &#123;<br>    <span class="hljs-comment">// 1. 写日志（注入 span fields）</span><br>    ...<br>    <br>    <span class="hljs-comment">// 2. 超过阈值，将 span 标红</span><br>    span := l.getMySpan()<br>    <span class="hljs-keyword">if</span> lvl &gt;= errorSpanLevel &#123;<br>        span.SetStatus(codes.Error, <span class="hljs-string">&quot;&quot;</span>)<br>        span.RecordError(errors.New(msg), ...)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>对应实现：<a target="_blank" rel="noopener" href="https://github.com/Becks723/fzuhelper-server/commit/071000f7c44f4c61d44b0b7e08aec1746f5b9999">071000f</a></p>
+<p>题外话：这里设计接口时还考虑过是否需要显式调用，让开发者手动控制 span：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">tracing.RecordError(ctx, someError) <span class="hljs-comment">// 背后调 span.RecordError</span><br>tracing.MarkError(ctx)  <span class="hljs-comment">// 背后调 span.SetStatus</span><br></code></pre></td></tr></table></figure>
+
+<p>因为两个方法的使用场景有细微区别，<code>RecordError</code> 仅仅是记录当前 span 上发生的错误；后面的 <code>SetStatus</code> 直接会把这个 span 挂掉。有时候只想记录错误但不想挂掉，如果不区分可能会影响业务的语义和监控的准确性。但显式调用也会提高开发者的学习成本，为了正确调用，他们就需要了解链路追踪这层的运行原理和实现。</p>
+<p>最终权衡利弊下还是放弃了显式定义方法，因为设计的初衷还是要保证链路追踪这层基础设施的透明性，尽量不增加开发者的负担。</p>
+<h1 id="日志导出为-Otel-logs"><a href="#日志导出为-Otel-logs" class="headerlink" title="日志导出为 Otel logs"></a>日志导出为 Otel logs</h1><p>对应实现：<a target="_blank" rel="noopener" href="https://github.com/Becks723/fzuhelper-server/commit/a276411c638cffa15d0cca28bfb2b2ffed80ed9f">a276411</a></p>
+<h1 id="Span-IsRecording"><a href="#Span-IsRecording" class="headerlink" title="Span.IsRecording()"></a>Span.IsRecording()</h1><p>这个接口判断<strong>当前的 Span 是否真的在记录数据</strong>。</p>
+<p>实际 OpenTelemetry 中，有些 span 会正常被采样（sampled），也有些不会（dropped）。后者仍会保留为了 api 的兼容性考虑，但它本质上就是一个空壳的 span（<strong>non-recording span</strong>）。</p>
+<p>关于这个接口函数，到底要不要在 <code>span.AddEvent</code> &#x2F; <code>span.RecordError</code> &#x2F; <code>span.SetStatus</code> 之前先做判断呢？答案是<strong>大部分情况不需要</strong>。其实在 <code>Span</code> 的内部实现中，做以上操作前已经帮你判断过一遍了。</p>
+<p>那么这个函数为什么还要当作公共接口导出呢？其实是为了少部分情况下<strong>提升性能，避免客户代码做昂贵的操作</strong>，比如，<code>SetAttributes()</code> 可能构造昂贵的字符串、JSON等数据。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">if</span> span.IsRecording() &#123;  <span class="hljs-comment">// 提前检查以避免昂贵的 heavyCompute() 操作</span><br>    span.SetAttributes(attribute.String(<span class="hljs-string">&quot;debug&quot;</span>, heavyCompute()))<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li>福uu链路追踪重构方案：<a target="_blank" rel="noopener" href="https://west2-online.feishu.cn/wiki/QCyKwL4YGicgJgk1GWUcz3gLnqe">https://west2-online.feishu.cn/wiki/QCyKwL4YGicgJgk1GWUcz3gLnqe</a></li>
+<li>Uptrace 文档：<a target="_blank" rel="noopener" href="https://uptrace.dev/get">https://uptrace.dev/get</a><ul>
+<li>使用 Uptrace-go 埋点：<a target="_blank" rel="noopener" href="https://uptrace.dev/get/opentelemetry-go">https://uptrace.dev/get/opentelemetry-go</a></li>
+<li>直接 exporter 导出到 Uptrace：<a target="_blank" rel="noopener" href="https://uptrace.dev/get/opentelemetry-go/otlp">https://uptrace.dev/get/opentelemetry-go/otlp</a></li>
+</ul>
 </li>
-<li><p>第一次运行会显示类似<code>key fingerprints xxx are unknown</code>的提示，输入<code>yes</code>信任即可。之后会让你输入服务器密码，也就是你虚拟机设置的密码登录，就能在宿主机上控制服务器了！</p>
+<li>OpenTelemetry 相关的埋点库：<ul>
+<li>Hertz：<a target="_blank" rel="noopener" href="https://github.com/hertz-contrib/obs-opentelemetry">https://github.com/hertz-contrib/obs-opentelemetry</a></li>
+<li>Kitex：<a target="_blank" rel="noopener" href="https://github.com/kitex-contrib/obs-opentelemetry">https://github.com/kitex-contrib/obs-opentelemetry</a></li>
+<li>第三方 gorm 埋点：<a target="_blank" rel="noopener" href="https://github.com/go-gorm/opentelemetry">https://github.com/go-gorm/opentelemetry</a><ul>
+<li>gorm 文档：<a target="_blank" rel="noopener" href="https://gorm.io/docs/write_plugins.html">插件</a></li>
+</ul>
 </li>
-</ol>
+<li>官方 redis 埋点：<a target="_blank" rel="noopener" href="https://github.com/redis/go-redis/tree/master/extra/redisotel">https://github.com/redis/go-redis/tree/master/extra/redisotel</a></li>
+</ul>
+</li>
+<li>OpenTelemetry 中常见的 attributes：<a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/specs/semconv/">OpenTelemetry semantic conventions</a></li>
+<li>OpenTelemetry Logger：<a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/languages/go/instrumentation/#logs">https://opentelemetry.io/docs/languages/go/instrumentation/#logs</a></li>
+</ul>
 
                 
               </div>
@@ -318,8 +377,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>使用SSH在宿主机上操作虚拟机</div>
-      <div>https://becks723.github.io/2026/03/28/使用SSH在宿主机上操作虚拟机/</div>
+      <div>记福uu链路追踪重构</div>
+      <div>https://becks723.github.io/2026/04/16/记福uu链路追踪重构/</div>
     </div>
     <div class="license-meta">
       
@@ -331,7 +390,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年3月28日</div>
+          <div>2026年4月16日</div>
         </div>
       
       
@@ -363,18 +422,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/04/16/%E8%AE%B0%E7%A6%8Fuu%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA%E9%87%8D%E6%9E%84/" title="记福uu链路追踪重构">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">记福uu链路追踪重构</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/03/19/eino/" title="eino">
-                        <span class="hidden-mobile">eino</span>
+                      <a href="/2026/03/28/%E4%BD%BF%E7%94%A8SSH%E5%9C%A8%E5%AE%BF%E4%B8%BB%E6%9C%BA%E4%B8%8A%E6%93%8D%E4%BD%9C%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="使用SSH在宿主机上操作虚拟机">
+                        <span class="hidden-mobile">使用SSH在宿主机上操作虚拟机</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
