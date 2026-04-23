@@ -19,26 +19,23 @@
   <meta name="author" content="Becks723">
   <meta name="keywords" content="">
   
-    <meta name="description" content="埋点所谓埋点（instrumentation），就是往你代码里加点逻辑（通常调调api就行），使得可观测平台（e.g. OpenTelemetry）能够从你的程序中导出需要监控的数据（学名：遥测数据），分为：链路（traces）、指标（metrics）、日志（logs），后续就是将数据呈现在看板上，实现可观测性。 分为手动埋点和调用埋点库埋点。  手动埋点：自己调 Otel sdk 埋点。优点：流">
+    <meta name="description" content="函数传参是值类型还是引用类型？ 无论如何都是值传递。  基本类型（int, string等）：拷贝值  结构体：拷贝值  指针类型：拷贝值，但由于指针指向变量的地址，所以能实现修改值  slice&#x2F;map&#x2F;channel：依旧拷贝值，能实现修改值是因为内部有指针指向同一个数组。 比如 slice 的本质是： 12345type slice struct &#123;    pt">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记福uu链路追踪重构">
-<meta property="og:url" content="https://becks723.github.io/2026/04/16/%E8%AE%B0%E7%A6%8Fuu%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA%E9%87%8D%E6%9E%84/index.html">
+<meta property="og:title" content="Go">
+<meta property="og:url" content="https://becks723.github.io/2026/04/23/Go/index.html">
 <meta property="og:site_name" content="Welcome to becks723&#39;s blog!">
-<meta property="og:description" content="埋点所谓埋点（instrumentation），就是往你代码里加点逻辑（通常调调api就行），使得可观测平台（e.g. OpenTelemetry）能够从你的程序中导出需要监控的数据（学名：遥测数据），分为：链路（traces）、指标（metrics）、日志（logs），后续就是将数据呈现在看板上，实现可观测性。 分为手动埋点和调用埋点库埋点。  手动埋点：自己调 Otel sdk 埋点。优点：流">
+<meta property="og:description" content="函数传参是值类型还是引用类型？ 无论如何都是值传递。  基本类型（int, string等）：拷贝值  结构体：拷贝值  指针类型：拷贝值，但由于指针指向变量的地址，所以能实现修改值  slice&#x2F;map&#x2F;channel：依旧拷贝值，能实现修改值是因为内部有指针指向同一个数组。 比如 slice 的本质是： 12345type slice struct &#123;    pt">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://becks723.github.io/2026/04/16/%E8%AE%B0%E7%A6%8Fuu%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA%E9%87%8D%E6%9E%84/http.png">
-<meta property="og:image" content="https://becks723.github.io/.io//04/16/%E8%AE%B0%E7%A6%8Fuu%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA%E9%87%8D%E6%9E%84/rpc.png">
-<meta property="article:published_time" content="2026-04-16T14:04:52.000Z">
-<meta property="article:modified_time" content="2026-04-22T06:35:55.712Z">
+<meta property="article:published_time" content="2026-04-23T11:58:57.000Z">
+<meta property="article:modified_time" content="2026-04-23T15:04:07.651Z">
 <meta property="article:author" content="Becks723">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://becks723.github.io/2026/04/16/%E8%AE%B0%E7%A6%8Fuu%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA%E9%87%8D%E6%9E%84/http.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>记福uu链路追踪重构 - Welcome to becks723&#39;s blog!</title>
+  <title>Go - Welcome to becks723&#39;s blog!</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="记福uu链路追踪重构"></span>
+            <span id="subtitle" data-typed-text="Go"></span>
           
         </div>
 
@@ -215,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-04-16 22:04" pubdate>
-          2026年4月16日 晚上
+        <time datetime="2026-04-23 19:58" pubdate>
+          2026年4月23日 晚上
         </time>
       </span>
     
@@ -227,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          817 字
         
       </span>
     
@@ -238,7 +235,7 @@
         
         
         
-          12 分钟
+          7 分钟
         
       </span>
     
@@ -275,107 +272,88 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">记福uu链路追踪重构</h1>
+            <h1 id="seo-header">Go</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="埋点"><a href="#埋点" class="headerlink" title="埋点"></a>埋点</h1><p>所谓埋点（instrumentation），就是往你代码里加点逻辑（通常调调api就行），使得可观测平台（e.g. OpenTelemetry）能够从你的程序中导出需要监控的数据（学名：遥测数据），分为：链路（traces）、指标（metrics）、日志（logs），后续就是将数据呈现在看板上，实现可观测性。</p>
-<p>分为<strong>手动埋点</strong>和<strong>调用埋点库埋点</strong>。</p>
+                <h2 id="函数传参是值类型还是引用类型？"><a href="#函数传参是值类型还是引用类型？" class="headerlink" title="函数传参是值类型还是引用类型？"></a>函数传参是值类型还是引用类型？</h2><ul>
+<li><p>无论如何都是<strong>值传递</strong>。</p>
 <ul>
-<li>手动埋点：自己调 Otel sdk 埋点。优点：流程可控、灵活度高；缺点：自己写麻烦</li>
-<li>埋点库：第三方框架往往提供自己的可观测性埋点代码，直接调。优点：标准统一，代码现成；缺点：没啥缺点</li>
-</ul>
-<p>Otel 官方是<strong>推荐优先第三方埋点库</strong>的，毕竟生态好，市面上的框架都有。</p>
-<p>福uu 需要埋点的地方有：</p>
-<ul>
-<li>api网关（http，使用了Hertz框架）</li>
-<li>微服务（rpc，使用了Kitex框架）</li>
-<li>基础设施&#x2F;中间件<ul>
-<li>db（使用 gorm）</li>
-<li>cache（使用 redis）</li>
-<li>cronjob &#x2F; 异步 task（使用自己实现的本地队列 taskqueue）</li>
-<li>jwch&#x2F;yjsy 等外部调用（http）</li>
-<li>…</li>
+<li><p>基本类型（int, string等）：拷贝值</p>
+</li>
+<li><p>结构体：拷贝值</p>
+</li>
+<li><p>指针类型：拷贝值，但由于指针指向变量的地址，所以能实现修改值</p>
+</li>
+<li><p>slice&#x2F;map&#x2F;channel：依旧拷贝值，能实现修改值是因为<strong>内部有指针指向同一个数组</strong>。</p>
+<p>比如 slice 的本质是：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> slice <span class="hljs-keyword">struct</span> &#123;<br>    ptr *T  <span class="hljs-comment">// 指针变量共享一个数组</span><br>    <span class="hljs-built_in">len</span> <span class="hljs-type">int</span><br>    <span class="hljs-built_in">cap</span> <span class="hljs-type">int</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
-<p>现已实现大部分埋点：</p>
+<h2 id="数组和切片的区别？"><a href="#数组和切片的区别？" class="headerlink" title="数组和切片的区别？"></a>数组和切片的区别？</h2><ul>
+<li><p><strong>长度</strong>角度：</p>
 <ul>
-<li>网关+微服务：<a target="_blank" rel="noopener" href="https://github.com/Becks723/fzuhelper-server/commit/f3059b559d7c6ab9d4693272b4d9abe925ef95a8">f3059b5</a></li>
-<li>db + cache：<a target="_blank" rel="noopener" href="https://github.com/Becks723/fzuhelper-server/commit/e0439e64e7fcf1d1436bf76dbce8392ec23a09e3">e0439e6</a></li>
-<li>taskqueue 的定时任务：<a target="_blank" rel="noopener" href="https://github.com/Becks723/fzuhelper-server/commit/07a138a8671e41ed8569d4e0778648c162944cd0">07a138a</a></li>
+<li>数组长度不可变，在定义时就确定了，<code>[3]int</code> 和 <code>[4]int</code> 不是一个类型</li>
+<li>切片长度可变。可使用 <code>append()</code> 来扩容切片</li>
 </ul>
-<p>还未完成：</p>
-<ul>
-<li>taskqueue 的异步task 部分</li>
-<li>外部调用</li>
-<li>待发现</li>
-</ul>
-<h1 id="Trace-打通-logger"><a href="#Trace-打通-logger" class="headerlink" title="Trace 打通 logger"></a>Trace 打通 logger</h1><p>福uu 服务端实现有自己的 logger (github.com&#x2F;…&#x2F;pkg&#x2F;logger&#x2F;) 。在没有引入监控体系前，调用 logger 的行为是：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">logger.Info(...)<br>logger.Errorf(..., err)<br></code></pre></td></tr></table></figure>
-
-<p>简单的日志打印，没有附加 trace 信息，无法根据日志锁定所属 trace &#x2F; span 等链路信息。</p>
-<p>现已打通 Trace 和 logger，使得在日志中能够附带记录当下这条日志所属 trace（链路）和 span（链路中的节点）。调用 logger 的行为变成：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">logger.WithCtx(ctx).Info(...)<br>logger.WithCtx(ctx).Errorf(..., err)<br></code></pre></td></tr></table></figure>
-
-<p>可以看到，客户代码改的很轻，监控信息通过 <code>context.Context</code> 即可透传进 logger，后者内部解析出 span 上下文，包装成若干额外的 <code>zap.Field</code> ，注入日志打印。<strong>在开发者侧，其实他们并没有，也不需要感知到链路追踪的实现细节</strong>，整个链路信息的记录和日志是程序在背后自动完成的，符合<em>偏基础设施</em>模块的设计准则。</p>
-<p>成果展示：</p>
-<p>下面是请求 <code>/api/v1/trace/ping</code> 这条链路的日志记录：</p>
-<ul>
-<li><p>http</p>
-<img src="/2026/04/16/%E8%AE%B0%E7%A6%8Fuu%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA%E9%87%8D%E6%9E%84/http.png" srcset="/img/loading.gif" lazyload class>
 </li>
-<li><p>rpc</p>
-<img src="/.io//04/16/%E8%AE%B0%E7%A6%8Fuu%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA%E9%87%8D%E6%9E%84/rpc.png" srcset="/img/loading.gif" lazyload class></li>
+<li><p><strong>是否为值类型</strong>角度：</p>
+<ul>
+<li><p>数组是值类型，值拷贝</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go">a := [<span class="hljs-number">3</span>]<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>&#125;<br>b := a<br>b[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span><br>fmt.Println(a) <span class="hljs-comment">// [1 2 3]</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>切片是引用类型，底层共享数组</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go">s1 := []<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>&#125;<br>s2 := s1<br>s2[<span class="hljs-number">0</span>] = <span class="hljs-number">100</span><br>fmt.Println(s1) <span class="hljs-comment">// [100 2 3]</span><br></code></pre></td></tr></table></figure></li>
 </ul>
-<ol>
-<li>日志新增了 <code>trace_id</code> 和 <code>span_id</code> 等链路语境下的参数</li>
-<li>同一条链路下，<code>trace_id</code> 相同，不同节点的 <code>span_id</code> 不同</li>
+</li>
+<li><p><strong>底层实现</strong>角度：</p>
+<ul>
+<li>slice本质是一个结构体，三个属性：<strong>数组指针、长度len、容量cap</strong>，指针指向了底层数组。<strong>切片可以视作数组的窗口（view）</strong>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="说说空结构体-struct"><a href="#说说空结构体-struct" class="headerlink" title="说说空结构体 struct{}"></a>说说空结构体 struct{}</h2><ol>
+<li><p>空结构体的大小：0，也就是说他不占内存空间</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">fmt.Println(unsafe.Sizeof(<span class="hljs-keyword">struct</span>&#123;&#125;&#123;&#125;)) <span class="hljs-comment">// 0</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>我们可以<strong>用 <code>struct&#123;&#125;</code> 作为 map 的值来模拟一个 set</strong>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Set <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-keyword">struct</span>&#123;&#125;  <span class="hljs-comment">// typedef</span><br><br>set := <span class="hljs-built_in">make</span>(Set)<br><span class="hljs-comment">// 添加数据</span><br><span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> []<span class="hljs-type">string</span>&#123;<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>&#125; &#123;<br>    set[v] = <span class="hljs-keyword">struct</span>&#123;&#125;&#123;&#125;<br>&#125;<br><span class="hljs-comment">// 检查</span><br><span class="hljs-keyword">if</span> _, ok := set[<span class="hljs-string">&quot;a&quot;</span>] &#123;<br>    fmt.Println(<span class="hljs-string">&quot;a exists&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>给<strong>管道发送空结构体，代表一种信号，可以节省空间</strong>，代替 bool</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">ch &lt;- <span class="hljs-keyword">struct</span>&#123;&#125;&#123;&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="Error-日志时自动处理当前-span"><a href="#Error-日志时自动处理当前-span" class="headerlink" title="Error 日志时自动处理当前 span"></a>Error 日志时自动处理当前 span</h2><p>我们的需求是：</p>
-<blockquote>
-<p>如果链路中出现了错误，我们想记录这个错误，使之能在监控看板上反映出来，方便排查。</p>
-</blockquote>
-<p>那么 logger 系统就是一个很好的切入点：将某个阈值 level 以上的日志，算作链路报错，自动将它所属的 span 标红，就能记录错误到监控后端。</p>
-<p>大致代码：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(l *logger)</span></span> log(lvl LogLevel, msg <span class="hljs-type">string</span>) &#123;<br>    <span class="hljs-comment">// 1. 写日志（注入 span fields）</span><br>    ...<br>    <br>    <span class="hljs-comment">// 2. 超过阈值，将 span 标红</span><br>    span := l.getMySpan()<br>    <span class="hljs-keyword">if</span> lvl &gt;= errorSpanLevel &#123;<br>        span.SetStatus(codes.Error, <span class="hljs-string">&quot;&quot;</span>)<br>        span.RecordError(errors.New(msg), ...)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>对应实现：<a target="_blank" rel="noopener" href="https://github.com/Becks723/fzuhelper-server/commit/071000f7c44f4c61d44b0b7e08aec1746f5b9999">071000f</a></p>
-<p>题外话：这里设计接口时还考虑过是否需要显式调用，让开发者手动控制 span：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">tracing.RecordError(ctx, someError) <span class="hljs-comment">// 背后调 span.RecordError</span><br>tracing.MarkError(ctx)  <span class="hljs-comment">// 背后调 span.SetStatus</span><br></code></pre></td></tr></table></figure>
-
-<p>因为两个方法的使用场景有细微区别，<code>RecordError</code> 仅仅是记录当前 span 上发生的错误；后面的 <code>SetStatus</code> 直接会把这个 span 挂掉。有时候只想记录错误但不想挂掉，如果不区分可能会影响业务的语义和监控的准确性。但显式调用也会提高开发者的学习成本，为了正确调用，他们就需要了解链路追踪这层的运行原理和实现。</p>
-<p>最终权衡利弊下还是放弃了显式定义方法，因为设计的初衷还是要保证链路追踪这层基础设施的透明性，尽量不增加开发者的负担。</p>
-<h1 id="日志导出为-Otel-logs"><a href="#日志导出为-Otel-logs" class="headerlink" title="日志导出为 Otel logs"></a>日志导出为 Otel logs</h1><p>对应实现：<a target="_blank" rel="noopener" href="https://github.com/Becks723/fzuhelper-server/commit/a276411c638cffa15d0cca28bfb2b2ffed80ed9f">a276411</a></p>
-<h1 id="Span-IsRecording"><a href="#Span-IsRecording" class="headerlink" title="Span.IsRecording()"></a>Span.IsRecording()</h1><p>这个接口判断<strong>当前的 Span 是否真的在记录数据</strong>。</p>
-<p>实际 OpenTelemetry 中，有些 span 会正常被采样（sampled），也有些不会（dropped）。后者仍会保留为了 api 的兼容性考虑，但它本质上就是一个空壳的 span（<strong>non-recording span</strong>）。</p>
-<p>关于这个接口函数，到底要不要在 <code>span.AddEvent</code> &#x2F; <code>span.RecordError</code> &#x2F; <code>span.SetStatus</code> 之前先做判断呢？答案是<strong>大部分情况不需要</strong>。其实在 <code>Span</code> 的内部实现中，做以上操作前已经帮你判断过一遍了。</p>
-<p>那么这个函数为什么还要当作公共接口导出呢？其实是为了少部分情况下<strong>提升性能，避免客户代码做昂贵的操作</strong>，比如，<code>SetAttributes()</code> 可能构造昂贵的字符串、JSON等数据。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">if</span> span.IsRecording() &#123;  <span class="hljs-comment">// 提前检查以避免昂贵的 heavyCompute() 操作</span><br>    span.SetAttributes(attribute.String(<span class="hljs-string">&quot;debug&quot;</span>, heavyCompute()))<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
-<li>福uu链路追踪重构方案：<a target="_blank" rel="noopener" href="https://west2-online.feishu.cn/wiki/QCyKwL4YGicgJgk1GWUcz3gLnqe">https://west2-online.feishu.cn/wiki/QCyKwL4YGicgJgk1GWUcz3gLnqe</a></li>
-<li>Uptrace 文档：<a target="_blank" rel="noopener" href="https://uptrace.dev/get">https://uptrace.dev/get</a><ul>
-<li>使用 Uptrace-go 埋点：<a target="_blank" rel="noopener" href="https://uptrace.dev/get/opentelemetry-go">https://uptrace.dev/get/opentelemetry-go</a></li>
-<li>直接 exporter 导出到 Uptrace：<a target="_blank" rel="noopener" href="https://uptrace.dev/get/opentelemetry-go/otlp">https://uptrace.dev/get/opentelemetry-go/otlp</a></li>
+<h2 id="init-函数是什么时候执行的？"><a href="#init-函数是什么时候执行的？" class="headerlink" title="init() 函数是什么时候执行的？"></a>init() 函数是什么时候执行的？</h2><ul>
+<li>init() 函数是 golang 中用来<strong>初始化包</strong>的函数，在 main() 函数之前<strong>自动</strong>执行，可以放一些字段的初始化逻辑。</li>
+<li>一个 go pkg的初始化流程：<strong>依赖包 import -&gt; 常量 -&gt; 变量 -&gt; init() -&gt; main()（如果有）</strong></li>
+<li>一个包可以有<strong>多个init()</strong>，<strong>执行时不保证先后顺序</strong>。</li>
+</ul>
+<h2 id="两个-interface-可以比较吗？"><a href="#两个-interface-可以比较吗？" class="headerlink" title="两个 interface 可以比较吗？"></a>两个 interface 可以比较吗？</h2><p>可以。interface可以用 <code>==</code> 比较。一看<strong>interface 的动态类型</strong>，二看<strong>interface 的实际值</strong>。</p>
+<ul>
+<li>一个 interface 内部包含两部分：<code>(type, value)</code></li>
+<li>比较时，一看 动态type：<ul>
+<li>type一致，往下继续看值</li>
+<li>type不一致，返回 false</li>
+<li>type一致，<strong>但不是“可比较类型”</strong>，返回 false<ul>
+<li>不可比较类型有：slice, map, func 等，<strong>channel 可比较</strong></li>
 </ul>
 </li>
-<li>OpenTelemetry 相关的埋点库：<ul>
-<li>Hertz：<a target="_blank" rel="noopener" href="https://github.com/hertz-contrib/obs-opentelemetry">https://github.com/hertz-contrib/obs-opentelemetry</a></li>
-<li>Kitex：<a target="_blank" rel="noopener" href="https://github.com/kitex-contrib/obs-opentelemetry">https://github.com/kitex-contrib/obs-opentelemetry</a></li>
-<li>第三方 gorm 埋点：<a target="_blank" rel="noopener" href="https://github.com/go-gorm/opentelemetry">https://github.com/go-gorm/opentelemetry</a><ul>
-<li>gorm 文档：<a target="_blank" rel="noopener" href="https://gorm.io/docs/write_plugins.html">插件</a></li>
 </ul>
 </li>
-<li>官方 redis 埋点：<a target="_blank" rel="noopener" href="https://github.com/redis/go-redis/tree/master/extra/redisotel">https://github.com/redis/go-redis/tree/master/extra/redisotel</a></li>
+<li>二看 实际value，一致则返回 true：<ul>
+<li>两个 <code>nil</code>，一致</li>
+<li>一个<code>nil</code>一个非<code>nil</code>，不一致</li>
+<li>两个值类型（int, string）或<strong>结构体内部字段值</strong> 相等，一致</li>
+<li>两个<strong>指针类型，要看是不是指向同一个内存地址</strong>，地址相同则一致</li>
 </ul>
 </li>
-<li>OpenTelemetry 中常见的 attributes：<a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/specs/semconv/">OpenTelemetry semantic conventions</a></li>
-<li>OpenTelemetry Logger：<a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/languages/go/instrumentation/#logs">https://opentelemetry.io/docs/languages/go/instrumentation/#logs</a></li>
 </ul>
+<p>几个典型<a target="_blank" rel="noopener" href="https://github.com/Becks723/mthread/blob/main/cmd/interfacecmp/main.go">示例</a>：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> MyImpl <span class="hljs-keyword">struct</span> &#123;<br>	Name <span class="hljs-type">string</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-comment">// nil</span><br>	<span class="hljs-keyword">var</span> nili1 <span class="hljs-keyword">interface</span>&#123;&#125; = <span class="hljs-literal">nil</span><br>	<span class="hljs-keyword">var</span> nili2 <span class="hljs-keyword">interface</span>&#123;&#125; = <span class="hljs-literal">nil</span><br>	fmt.Println(<span class="hljs-string">&quot;- nil(non-typed) == nil(non-typed): &quot;</span>, nili1 == nili2) <span class="hljs-comment">// true</span><br><br>	<span class="hljs-comment">// typed nil</span><br>	<span class="hljs-keyword">var</span> typedi *<span class="hljs-type">int</span> = <span class="hljs-literal">nil</span><br>	nili2 = typedi<br>	fmt.Println(<span class="hljs-string">&quot;- nil(non-typed) == nil(*int): &quot;</span>, nili1 == nili2) <span class="hljs-comment">// false</span><br><br>	<span class="hljs-comment">// same runtime type, same value</span><br>	<span class="hljs-keyword">var</span> myImpl1 <span class="hljs-keyword">interface</span>&#123;&#125; = MyImpl&#123;<span class="hljs-string">&quot;aaa&quot;</span>&#125;<br>	<span class="hljs-keyword">var</span> myImpl2 <span class="hljs-keyword">interface</span>&#123;&#125; = MyImpl&#123;<span class="hljs-string">&quot;aaa&quot;</span>&#125;<br>	fmt.Println(<span class="hljs-string">&quot;- abc(MyImpl) == abc(MyImpl): &quot;</span>, myImpl1 == myImpl2) <span class="hljs-comment">// true</span><br><br>	<span class="hljs-comment">// same runtime type, different values</span><br>	<span class="hljs-keyword">var</span> myImplptr1 <span class="hljs-keyword">interface</span>&#123;&#125; = &amp;MyImpl&#123;<span class="hljs-string">&quot;aaa&quot;</span>&#125;<br>	<span class="hljs-keyword">var</span> myImplptr2 <span class="hljs-keyword">interface</span>&#123;&#125; = &amp;MyImpl&#123;<span class="hljs-string">&quot;aaa&quot;</span>&#125;<br>	fmt.Println(<span class="hljs-string">&quot;- abc(*MyImpl) == abc(*MyImpl): &quot;</span>, myImplptr1 == myImplptr2) <span class="hljs-comment">// false</span><br><br>	<span class="hljs-comment">// uncomparable type</span><br>	<span class="hljs-keyword">var</span> slice1 <span class="hljs-keyword">interface</span>&#123;&#125; = []<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;<br>	<span class="hljs-keyword">var</span> slice2 <span class="hljs-keyword">interface</span>&#123;&#125; = []<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;<br>	fmt.Println(<span class="hljs-string">&quot;- [1 2 3]([]int) == [1 2 3]([]int): &quot;</span>, slice1 == slice2) <span class="hljs-comment">// panic</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
 
                 
               </div>
@@ -393,8 +371,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>记福uu链路追踪重构</div>
-      <div>https://becks723.github.io/2026/04/16/记福uu链路追踪重构/</div>
+      <div>Go</div>
+      <div>https://becks723.github.io/2026/04/23/Go/</div>
     </div>
     <div class="license-meta">
       
@@ -406,7 +384,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年4月16日</div>
+          <div>2026年4月23日</div>
         </div>
       
       
@@ -438,18 +416,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/04/23/Go/" title="Go">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/03/28/%E4%BD%BF%E7%94%A8SSH%E5%9C%A8%E5%AE%BF%E4%B8%BB%E6%9C%BA%E4%B8%8A%E6%93%8D%E4%BD%9C%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="使用SSH在宿主机上操作虚拟机">
-                        <span class="hidden-mobile">使用SSH在宿主机上操作虚拟机</span>
+                      <a href="/2026/04/16/%E8%AE%B0%E7%A6%8Fuu%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA%E9%87%8D%E6%9E%84/" title="记福uu链路追踪重构">
+                        <span class="hidden-mobile">记福uu链路追踪重构</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
