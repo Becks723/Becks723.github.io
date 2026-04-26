@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://becks723.github.io/.io//04/25/%E9%85%8D%E7%BD%AEuptrace%E7%8E%AF%E5%A2%83/image-20260425170906457.png">
 <meta property="article:published_time" content="2026-04-25T08:03:23.000Z">
-<meta property="article:modified_time" content="2026-04-25T09:14:48.370Z">
+<meta property="article:modified_time" content="2026-04-26T06:18:42.236Z">
 <meta property="article:author" content="Becks723">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://becks723.github.io/.io//04/25/%E9%85%8D%E7%BD%AEuptrace%E7%8E%AF%E5%A2%83/image-20260425170906457.png">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          376 字
+          747 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          4 分钟
+          7 分钟
         
       </span>
     
@@ -337,6 +337,96 @@
 </ul>
 </li>
 </ul>
+</li>
+<li><p>限制 Clickhouse 占用资源：Uptrace组件中 ck 的资源占大头，它负责存储观测数据。</p>
+<p>目前福uu线上环境：2C16G，起了mysql, redis, etcd, promethus+grafana+cAdvisor, loki+alloy和各种 expoter，以及拉格朗日bot。</p>
+<table>
+<thead>
+<tr>
+<th>容器</th>
+<th align="right">内存</th>
+<th>判断</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>fzuhelper-mysql</code></td>
+<td align="right"><strong>4.919GiB</strong></td>
+<td>最大占用，主要来自 InnoDB buffer pool &#x2F; 查询缓存类内存</td>
+</tr>
+<tr>
+<td><code>lagrange</code></td>
+<td align="right"><strong>1.14GiB</strong></td>
+<td>你已说明正常</td>
+</tr>
+<tr>
+<td><code>fzuhelper-alloy</code></td>
+<td align="right"><strong>455.8MiB</strong></td>
+<td>日志采集&#x2F;处理，CPU 和写盘偏高</td>
+</tr>
+<tr>
+<td><code>fzuhelper-redis</code></td>
+<td align="right"><strong>279.7MiB</strong></td>
+<td>不算离谱，但写盘累计很高</td>
+</tr>
+<tr>
+<td><code>fzuhelper-prometheus</code></td>
+<td align="right"><strong>271.5MiB</strong></td>
+<td>内存正常，但 Block I&#x2F;O 写入较高</td>
+</tr>
+<tr>
+<td><code>fzuhelper-bot</code></td>
+<td align="right"><strong>253.1MiB</strong></td>
+<td>中等偏上，可观察</td>
+</tr>
+<tr>
+<td><code>fzuhelper-loki</code></td>
+<td align="right"><strong>169.7MiB</strong></td>
+<td>正常</td>
+</tr>
+<tr>
+<td><code>fzuhelper-grafana</code></td>
+<td align="right"><strong>158.9MiB</strong></td>
+<td>正常，但写盘累计较高</td>
+</tr>
+<tr>
+<td><code>fzuhelper-cadvisor</code></td>
+<td align="right"><strong>151.1MiB</strong></td>
+<td>正常偏高一点，网络输出很大</td>
+</tr>
+</tbody></table>
+<p>其中最大内存占用是 mysql ，约5G，我们没有配置 <code>innodb_buffer_pool_size</code> ，它自动估算的。</p>
+<p>其次是 lagrange 的 1.14G，这是必须要起的一个QQbot进程。</p>
+<p>剩下6.8G 和 35G磁盘。</p>
+<p>官方文档上的 Uptrace 配置要求：</p>
+<blockquote>
+<p> <strong>Minimum system requirements</strong>:</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>2+ CPU cores</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>4GB+ RAM</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>10GB+ disk space for initial setup</li>
+</ul>
+</blockquote>
+<p>基于以上分析，部署 Uptrace 需要考虑 ck 的资源占用情况。先给它限制了内存到 2G，后面再看需不需要放宽。</p>
+</li>
+<li><p>设置定期清理观测数据：</p>
+<p>ck 还需设置观测数据ttl，这里先清理的频繁一点：</p>
+<ul>
+<li>trace 和 log 每 5 天清理</li>
+<li>metrics 每 9 天清理</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">ch_schema:</span><br>  <span class="hljs-attr">spans:</span><br>    <span class="hljs-attr">ttl_delete:</span> <span class="hljs-string">$&#123;UPTRACE_RETENTION_SPANS&#125;</span>  <span class="hljs-comment"># 5 DAY</span><br>    <span class="hljs-attr">storage_policy:</span> <span class="hljs-string">&#x27;default&#x27;</span><br><br>  <span class="hljs-attr">metrics:</span><br>    <span class="hljs-attr">ttl_delete:</span> <span class="hljs-string">$&#123;UPTRACE_RETENTION_METRICS&#125;</span> <span class="hljs-comment"># 9 DAY</span><br>    <span class="hljs-attr">storage_policy:</span> <span class="hljs-string">&#x27;default&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>Uptrace 的配置文件明确支持环境变量展开，我们的真实值就可以保存在环境变量里（<code>docker/env/uptrace.env</code>）</p>
 </li>
 </ol>
 
