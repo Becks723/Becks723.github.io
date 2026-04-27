@@ -19,13 +19,15 @@
   <meta name="author" content="Becks723">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
+    <meta name="description" content="Shebag1#!&#x2F;usr&#x2F;bin&#x2F;env python3  写在文件顶部。表示这个py文件可以作为脚步直接运行，系统会使用 python3 执行它。 导入模块整个导入1import os  部分导入如果只需使用模块的部分函数，可以用 from ... import ... 123456from dotenv import load_dotenv  # 从 dotenv 模块导入 load_dot">
+<meta property="og:type" content="article">
 <meta property="og:title" content="python">
 <meta property="og:url" content="https://becks723.github.io/2025/02/09/python/index.html">
 <meta property="og:site_name" content="Welcome to becks723&#39;s blog!">
+<meta property="og:description" content="Shebag1#!&#x2F;usr&#x2F;bin&#x2F;env python3  写在文件顶部。表示这个py文件可以作为脚步直接运行，系统会使用 python3 执行它。 导入模块整个导入1import os  部分导入如果只需使用模块的部分函数，可以用 from ... import ... 123456from dotenv import load_dotenv  # 从 dotenv 模块导入 load_dot">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-02-08T17:15:22.000Z">
-<meta property="article:modified_time" content="2025-02-08T17:15:22.182Z">
+<meta property="article:modified_time" content="2026-04-27T16:54:37.536Z">
 <meta property="article:author" content="Becks723">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -222,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          397 字
         
       </span>
     
@@ -233,7 +235,7 @@
         
         
         
-          1 分钟
+          4 分钟
         
       </span>
     
@@ -275,7 +277,59 @@
             
               <div class="markdown-body">
                 
-                
+                <h1 id="Shebag"><a href="#Shebag" class="headerlink" title="Shebag"></a>Shebag</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python3</span><br></code></pre></td></tr></table></figure>
+
+<p>写在文件顶部。表示这个<code>py</code>文件可以作为脚步直接运行，系统会使用 <code>python3</code> 执行它。</p>
+<h1 id="导入模块"><a href="#导入模块" class="headerlink" title="导入模块"></a>导入模块</h1><h2 id="整个导入"><a href="#整个导入" class="headerlink" title="整个导入"></a>整个导入</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br></code></pre></td></tr></table></figure>
+
+<h2 id="部分导入"><a href="#部分导入" class="headerlink" title="部分导入"></a>部分导入</h2><p>如果只需使用模块的部分函数，可以用 <code>from ... import ...</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> dotenv <span class="hljs-keyword">import</span> load_dotenv  <span class="hljs-comment"># 从 dotenv 模块导入 load_dotenv 函数</span><br><br><span class="hljs-comment"># ...</span><br><br><span class="hljs-comment"># 使用函数直接写</span><br>load_dotenv(...)<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h1><h2 id="字符串常量"><a href="#字符串常量" class="headerlink" title="字符串常量"></a>字符串常量</h2><p>python的字符串常量同时支持<strong>单引号</strong> <code>&#39;&#39;</code> 和<strong>双引号</strong> <code>&quot;&quot;</code>。</p>
+<h2 id="内嵌变量"><a href="#内嵌变量" class="headerlink" title="内嵌变量"></a>内嵌变量</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">name = <span class="hljs-string">&quot;Becks723&quot;</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Hello! My name is <span class="hljs-subst">&#123;name&#125;</span>.&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h1><h2 id="写异常"><a href="#写异常" class="headerlink" title="写异常"></a>写异常</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">raise</span> SomeError(...)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">路径沙箱实现</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-comment"># 拼接 WORKDIR 和 path_str</span><br>path = (WORKDIR / path_str).resolve()<br><span class="hljs-comment"># 如果新路径不在 WORKDIR 中，报 ValueError 醋我</span><br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> path.is_relative_to(WORKDIR):<br>    <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">f&quot;Path escapes workspace: <span class="hljs-subst">&#123;path_str&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h2 id="try…except-语句"><a href="#try…except-语句" class="headerlink" title="try…except 语句"></a>try…except 语句</h2><p><code>try...except</code>语句用于处理 try 块里的异常，类比 java&#x2F;C# 的<code>try...catch</code>。</p>
+<ul>
+<li>except 可以有多个，处理不同种错误，一层层滤下来</li>
+<li>多种错误的并列写法：<code>(SomeError1, SomeError2) as e:</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">子进程执行命令，并处理异常</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h1><h2 id="拼接路径"><a href="#拼接路径" class="headerlink" title="拼接路径"></a>拼接路径</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">path = (base_path / relative_path_str).resolve()<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">WORKDIR = Path.cwd()  <span class="hljs-comment"># 当请wd</span><br>path = (WORKDIR / <span class="hljs-string">&quot;123&quot;</span>).resolve()<br><span class="hljs-built_in">print</span>(path) <span class="hljs-comment"># 当前目录/123</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="是否为相对路径"><a href="#是否为相对路径" class="headerlink" title="是否为相对路径"></a>是否为相对路径</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">Path.is_relative_to()<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> some_path.is_relative_to(base_path):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;not relative path&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h2 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">Path.read_text()<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">content = some_file.read_text()<br></code></pre></td></tr></table></figure>
+
+<h2 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">Path.write_text(...)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">content = <span class="hljs-string">&quot;This is an apple.&quot;</span><br>some_file.write(content)<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="函数参数加星号"><a href="#函数参数加星号" class="headerlink" title="函数参数加星号"></a>函数参数加星号</h1><h2 id="加一个星号"><a href="#加一个星号" class="headerlink" title="加一个星号"></a>加一个星号</h2><p>以元组（tuple）形式传入</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">param1, *param2</span>):<br>    <span class="hljs-built_in">print</span>(param1)<br>    <span class="hljs-built_in">print</span>(param2)<br><br>foo(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>)<br><span class="hljs-comment"># 输出</span><br><span class="hljs-comment"># 1</span><br><span class="hljs-comment"># (2, 3, 4, 5)</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="加两个星号：-kwargs"><a href="#加两个星号：-kwargs" class="headerlink" title="加两个星号：**kwargs"></a>加两个星号：**kwargs</h2><p>以字典（dict）形式传入</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params">param1, **param2</span>):<br>    <span class="hljs-built_in">print</span> (param1)<br>    <span class="hljs-built_in">print</span> (param2)<br>    <br>bar(<span class="hljs-number">1</span>,a=<span class="hljs-number">2</span>,b=<span class="hljs-number">3</span>)<br><span class="hljs-comment"># 输出</span><br><span class="hljs-comment"># 1</span><br><span class="hljs-comment"># &#123;‘a’: 2, &#x27;b&#x27;: 3&#125;</span><br></code></pre></td></tr></table></figure>
+
+
                 
               </div>
             
