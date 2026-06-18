@@ -8,8 +8,8 @@
 <head>
   <meta charset="UTF-8">
 
-  <link rel="apple-touch-icon" sizes="76x76" href="../../../../img/fluid.png">
-  <link rel="icon" href="../../../../img/fluid.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -26,15 +26,15 @@
 <meta property="og:site_name" content="Welcome to becks723&#39;s blog!">
 <meta property="og:description" content="Android逆向apk文件结构   文件 解释    assets目录 存放apk的静态资源文件，如视频、音频、图片等。   lib&#x2F;目录 arm64-v8a只用于64位的Android设备；armeabi-v7a基本通用所有Android设备；x86常见用于安卓模拟器，其目录下的.so文件是c&#x2F;c++编译的动态链接库。   META-INF目录 保存应用的签名信息，相当于a">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://becks723.github.io/.io//02/11/android-re/activity-lifecycle.png">
-<meta property="og:image" content="https://becks723.github.io/.io//02/11/android-re/jeb-start.png">
-<meta property="og:image" content="https://becks723.github.io/.io//02/11/android-re/jeb-attch.png">
-<meta property="og:image" content="https://becks723.github.io/.io//02/11/android-re/jeb-debug.png">
+<meta property="og:image" content="https://becks723.github.io/2025/02/11/android-re/activity-lifecycle.png">
+<meta property="og:image" content="https://becks723.github.io/2025/02/11/android-re/jeb-start.png">
+<meta property="og:image" content="https://becks723.github.io/2025/02/11/android-re/jeb-attch.png">
+<meta property="og:image" content="https://becks723.github.io/2025/02/11/android-re/jeb-debug.png">
 <meta property="article:published_time" content="2025-02-10T22:09:16.000Z">
 <meta property="article:modified_time" content="2025-03-05T05:37:11.000Z">
 <meta property="article:author" content="Becks723">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://becks723.github.io/.io//02/11/android-re/activity-lifecycle.png">
+<meta name="twitter:image" content="https://becks723.github.io/2025/02/11/android-re/activity-lifecycle.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -64,12 +64,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
 
 
-<link  rel="stylesheet" href="../../../../css/main.css" />
+<link  rel="stylesheet" href="/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="../../../../css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="../../../../css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
 
@@ -85,8 +85,8 @@
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="../../../../js/utils.js" ></script>
-  <script  src="../../../../js/color-schema.js" ></script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
   
 
 
@@ -103,7 +103,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="../../../../index.html">
+    <a class="navbar-brand" href="/">
       <strong>Fluid</strong>
     </a>
 
@@ -122,7 +122,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="../../../../index.html" target="_self">
+              <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -134,7 +134,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="../../../../archives/" target="_self">
+              <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -146,7 +146,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="../../../../categories/" target="_self">
+              <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -158,7 +158,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="../../../../tags/" target="_self">
+              <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -170,7 +170,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="../../../../about/" target="_self">
+              <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -200,7 +200,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('../../../../img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -391,7 +391,7 @@
 <td>接口。</td>
 </tr>
 </tbody></table>
-<h2 id="Activity的生命周期"><a href="#Activity的生命周期" class="headerlink" title="Activity的生命周期"></a>Activity的生命周期</h2><img src="/.io//02/11/android-re/activity-lifecycle.png" srcset="/img/loading.gif" lazyload class title="img">
+<h2 id="Activity的生命周期"><a href="#Activity的生命周期" class="headerlink" title="Activity的生命周期"></a>Activity的生命周期</h2><img src="/2025/02/11/android-re/activity-lifecycle.png" srcset="/img/loading.gif" lazyload class title="img">
 
 <table>
 <thead>
@@ -522,13 +522,13 @@
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs vim">adb <span class="hljs-keyword">shell</span> <span class="hljs-keyword">am</span> start -D -n 包名/类名<br><br>例如：<br>adb <span class="hljs-keyword">shell</span> <span class="hljs-keyword">am</span> start -D -n <span class="hljs-keyword">com</span>.zj.wuaipojie/.ui.MainActivity<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>打开jeb，拖入应用apk反编译。点击<code>开始</code>图标开始调试。</p>
-<img src="/.io//02/11/android-re/jeb-start.png" srcset="/img/loading.gif" lazyload class title="image-20250304001621185">
+<img src="/2025/02/11/android-re/jeb-start.png" srcset="/img/loading.gif" lazyload class title="image-20250304001621185">
 
 <p>确保进程名和你的应用一致（图中为<code>com.zj.wuaipojie</code>），点击<code>附上</code>。</p>
-<img src="/.io//02/11/android-re/jeb-attch.png" srcset="/img/loading.gif" lazyload class>
+<img src="/2025/02/11/android-re/jeb-attch.png" srcset="/img/loading.gif" lazyload class>
 </li>
 <li><p>正式开始调试。光标停在某一行smali字节码上，<code>ctrl+B</code>下断点。</p>
-<img src="/.io//02/11/android-re/jeb-debug.png" srcset="/img/loading.gif" lazyload class></li>
+<img src="/2025/02/11/android-re/jeb-debug.png" srcset="/img/loading.gif" lazyload class></li>
 </ol>
 <h2 id="Log插桩"><a href="#Log插桩" class="headerlink" title="Log插桩"></a>Log插桩</h2><p>Log插桩指的是反编译APK文件时，在对应的smali文件里，添加相应的smali代码，将程序中的关键信息，以log日志的形式进行输出。</p>
 
@@ -593,7 +593,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="../../26/java/" title="java">
+                      <a href="/2025/02/26/java/" title="java">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">java</span>
                         <span class="visible-mobile">上一篇</span>
@@ -603,7 +603,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="../../09/python/" title="python">
+                      <a href="/2025/02/09/python/" title="python">
                         <span class="hidden-mobile">python</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -758,8 +758,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="../../../../js/events.js" ></script>
-<script  src="../../../../js/plugins.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -781,7 +781,7 @@
 
 
   
-    <script  src="../../../../js/img-lazyload.js" ></script>
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
@@ -880,7 +880,7 @@
 
   <script>Fluid.plugins.imageCaption();</script>
 
-  <script  src="../../../../js/local-search.js" ></script>
+  <script  src="/js/local-search.js" ></script>
 
   <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
@@ -890,7 +890,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="../../../../js/boot.js" ></script>
+<script  src="/js/boot.js" ></script>
 
 
   
