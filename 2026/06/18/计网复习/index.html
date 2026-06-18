@@ -1,0 +1,945 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Becks723">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计算机网络复习写在前面：  为 fzu-se 期末而写，不代表计网所有知识 面向考试题目的复习，不保证严谨的逻辑 参考课程：王道考研b站视频 注意理解知识点，运用 star 法则将一个技术的背景、成因、过程、结果能够复述出来。比如ARP协议，比如DNS协议，又比如TCP三握四挥  第一章 绪论三种数据交换三种交换的性能与比较性能指标：速率性能指标：带宽性能指标：时延性能指标：时延带宽积第二章 物理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计网复习">
+<meta property="og:url" content="https://becks723.github.io/2026/06/18/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Welcome to becks723&#39;s blog!">
+<meta property="og:description" content="计算机网络复习写在前面：  为 fzu-se 期末而写，不代表计网所有知识 面向考试题目的复习，不保证严谨的逻辑 参考课程：王道考研b站视频 注意理解知识点，运用 star 法则将一个技术的背景、成因、过程、结果能够复述出来。比如ARP协议，比如DNS协议，又比如TCP三握四挥  第一章 绪论三种数据交换三种交换的性能与比较性能指标：速率性能指标：带宽性能指标：时延性能指标：时延带宽积第二章 物理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://becks723.github.io/.io//06/18/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0/ppp.png">
+<meta property="og:image" content="https://becks723.github.io/.io//becks723/benke/network/ip_packet.png">
+<meta property="og:image" content="https://becks723.github.io/.io//06/18/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0/ip_fragment.png">
+<meta property="og:image" content="https://becks723.github.io/.io//06/18/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0/ip_addr.png">
+<meta property="og:image" content="https://becks723.github.io/.io//06/18/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0/ip_special.png">
+<meta property="og:image" content="https://becks723.github.io/.io//06/18/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0/route-agg.png">
+<meta property="og:image" content="https://becks723.github.io/.io//06/18/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0/nat.png">
+<meta property="article:published_time" content="2026-06-18T08:30:55.000Z">
+<meta property="article:modified_time" content="2026-06-18T08:34:01.807Z">
+<meta property="article:author" content="Becks723">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://becks723.github.io/.io//06/18/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0/ppp.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>计网复习 - Welcome to becks723&#39;s blog!</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"becks723.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计网复习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-06-18 16:30" pubdate>
+          2026年6月18日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          31 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">计网复习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="计算机网络复习"><a href="#计算机网络复习" class="headerlink" title="计算机网络复习"></a>计算机网络复习</h1><p>写在前面：</p>
+<blockquote>
+<p>为 fzu-se 期末而写，不代表计网所有知识</p>
+<p>面向考试题目的复习，不保证严谨的逻辑</p>
+<p>参考课程：王道考研b站视频</p>
+<p>注意理解知识点，运用 star 法则将一个技术的背景、成因、过程、结果能够复述出来。比如ARP协议，比如DNS协议，又比如TCP三握四挥</p>
+</blockquote>
+<h1 id="第一章-绪论"><a href="#第一章-绪论" class="headerlink" title="第一章 绪论"></a>第一章 绪论</h1><h2 id="三种数据交换"><a href="#三种数据交换" class="headerlink" title="三种数据交换"></a>三种数据交换</h2><h2 id="三种交换的性能与比较"><a href="#三种交换的性能与比较" class="headerlink" title="三种交换的性能与比较"></a>三种交换的性能与比较</h2><h2 id="性能指标：速率"><a href="#性能指标：速率" class="headerlink" title="性能指标：速率"></a>性能指标：速率</h2><h2 id="性能指标：带宽"><a href="#性能指标：带宽" class="headerlink" title="性能指标：带宽"></a>性能指标：带宽</h2><h2 id="性能指标：时延"><a href="#性能指标：时延" class="headerlink" title="性能指标：时延"></a>性能指标：时延</h2><h2 id="性能指标：时延带宽积"><a href="#性能指标：时延带宽积" class="headerlink" title="性能指标：时延带宽积"></a>性能指标：时延带宽积</h2><h1 id="第二章-物理层"><a href="#第二章-物理层" class="headerlink" title="第二章 物理层"></a>第二章 物理层</h1><h2 id="信号、信源、信宿、信道"><a href="#信号、信源、信宿、信道" class="headerlink" title="信号、信源、信宿、信道"></a>信号、信源、信宿、信道</h2><ul>
+<li>信号：数据的载体</li>
+<li>信源：信号的来源（发送方）</li>
+<li>信宿：信号的去向（接收方）</li>
+<li>信道：传输信号的通道（发送信道&amp;接收信道）</li>
+</ul>
+<h2 id="数字-模拟信号"><a href="#数字-模拟信号" class="headerlink" title="数字 &amp; 模拟信号"></a>数字 &amp; 模拟信号</h2><ul>
+<li>数字信号：值离散的信号</li>
+<li>模拟信号：值连续的信号</li>
+</ul>
+<h2 id="码元与比特"><a href="#码元与比特" class="headerlink" title="码元与比特"></a>码元与比特</h2><p>一个信号周期内可能出现几种信号，每一个信号就是一个码元。</p>
+<ul>
+<li>二进制码元：可能出现两种信号，0和1。则一码元携带 1bit。</li>
+<li>四进制码元：可能出现四种信号，0，1，2，3。一码元携带 2bit。</li>
+<li>十六进制码元：可能出现16种信号，0……F。一码元携带4bit，从0000到1111。</li>
+</ul>
+<p>以此类推，总结成<strong>码元与比特的关系</strong>：</p>
+<blockquote>
+<p>若一个周期可能出现 K 种不同的信号，就是 K进制码元。一码元携带 log2(K) 比特。</p>
+</blockquote>
+<h2 id="速率的另一种表示——波特率"><a href="#速率的另一种表示——波特率" class="headerlink" title="速率的另一种表示——波特率"></a>速率的另一种表示——波特率</h2><p>速率：</p>
+<ul>
+<li>比特率：每秒传输几个比特。单位bit&#x2F;s、b&#x2F;s、bps</li>
+<li>波特率：每秒传输几个码元。单位 码元&#x2F;秒，或<strong>波特（Baud）</strong></li>
+</ul>
+<h2 id="噪声（Noise）"><a href="#噪声（Noise）" class="headerlink" title="噪声（Noise）"></a>噪声（Noise）</h2><p>噪声会影响信道的数据传输效果</p>
+<h2 id="信道容量的两大定理"><a href="#信道容量的两大定理" class="headerlink" title="信道容量的两大定理"></a>信道容量的两大定理</h2><h3 id="奈奎斯特定理"><a href="#奈奎斯特定理" class="headerlink" title="奈奎斯特定理"></a>奈奎斯特定理</h3><blockquote>
+<p>无噪声情况下，信道的极限波特率 &#x3D; 2W（单位：波特，码元&#x2F;秒）</p>
+<ul>
+<li>W 表示信道的带宽，以 Hz 为单位</li>
+</ul>
+</blockquote>
+<p>我们知道，码元可以转为 比特，一码元携带 log2(K) bit，K为信号种类数。那么奈奎斯特定理还可以延伸为比特率表示：</p>
+<blockquote>
+<p>无噪声情况下，信道的极限<strong>比特率</strong> &#x3D; 2W log2(K) （单位bps）</p>
+<ul>
+<li>W表示信道的带宽，以 Hz 为单位</li>
+<li>K表示一个信号频率包含的不同信号数</li>
+</ul>
+</blockquote>
+<h3 id="香农定理"><a href="#香农定理" class="headerlink" title="香农定理"></a>香农定理</h3><blockquote>
+<p>有噪声情况下，信道的极限比特率 &#x3D; W log2(1 + S &#x2F; N)</p>
+<ul>
+<li>W表示信道的带宽，以 Hz 为单位</li>
+<li>S&#x2F;N 表示信噪比（无符号）</li>
+</ul>
+</blockquote>
+<p>信噪比：<code>信道内信号的功率 / 信道内噪声的功率</code></p>
+<p>有两种表示方法：</p>
+<ul>
+<li>无符号版本：两个功率直接相除</li>
+<li>有符号版本：<code>1dB = 10 * lg(S/N)</code>。类似科学计数法，如：无符号的10000表示为 40dB。</li>
+</ul>
+<h2 id="码分复用"><a href="#码分复用" class="headerlink" title="码分复用"></a>码分复用</h2><p>王道和湖科大视频里都没讲到……先跳</p>
+<h1 id="第三章-数据链路层"><a href="#第三章-数据链路层" class="headerlink" title="第三章 数据链路层"></a>第三章 数据链路层</h1><p>数据链路层的职责：</p>
+<ul>
+<li>组帧：将网络层传下来的 IP数据报分组 封装成帧。<ul>
+<li>界定帧：划定每个帧的界限</li>
+<li>透明传输：不管数据是什么，链路层都能原封不动地将数据发送给接收方</li>
+</ul>
+</li>
+<li>差错控制：发现并解决一个帧内部的位错误</li>
+<li>可靠传输：发现并解决帧错（帧丢失，帧重复，帧乱序）</li>
+<li>流量控制</li>
+<li>介质访问控制：广播信道需要，因为总线型拓扑多个节点会争抢传输介质的使用权</li>
+</ul>
+<h2 id="循环冗余校验码"><a href="#循环冗余校验码" class="headerlink" title="循环冗余校验码"></a>循环冗余校验码</h2><blockquote>
+<p>思路：传送的数据（被除数）除以一个传输双方约定好的除数。如果余数为零，则传输没有错误；否则有错。</p>
+</blockquote>
+<p>被除数由两部分组成：</p>
+<ul>
+<li>信息位 K位</li>
+<li>校验位 R位</li>
+</ul>
+<p>这 K + R 位数据共同构成了被除数。</p>
+<p>例：设生成多项式为 G(x) &#x3D; x^3 + x^2 + 1, 信息码为 101001，求对应的CRC码。</p>
+<figure class="highlight gml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs gml"><span class="hljs-number">1.</span> 除数通常从提干给的生成多项式中求出。<br>G(<span class="hljs-variable language_">x</span>) = <span class="hljs-number">1</span> * <span class="hljs-variable language_">x</span>^<span class="hljs-number">3</span> + <span class="hljs-number">1</span> * <span class="hljs-variable language_">x</span>^<span class="hljs-number">2</span> + <span class="hljs-number">0</span> * <span class="hljs-variable language_">x</span>^<span class="hljs-number">1</span> + <span class="hljs-number">1</span> * <span class="hljs-variable language_">x</span>^<span class="hljs-number">0</span><br>则除数为 <span class="hljs-number">1101</span><br><br><span class="hljs-number">2.</span> 校验码的长度为生成多项式最高幂的值，此题为<span class="hljs-number">3</span><br><span class="hljs-number">3.</span> 被除数为 信息码 + 校验码补零，即 <span class="hljs-number">101001000</span><br><span class="hljs-number">4.</span> 被除数和除数进行模二除法，和模二减法，得到的余数就是校验码的值，那么CRC码就是 信息码+ 算出的校验码。<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="码分复用（CDM）"><a href="#码分复用（CDM）" class="headerlink" title="码分复用（CDM）"></a>码分复用（CDM）</h2><p>属于信道划分的介质访问控制技术。</p>
+<h2 id="CSMA-协议"><a href="#CSMA-协议" class="headerlink" title="CSMA 协议"></a>CSMA 协议</h2><p>场景：多个节点共享一个信道传输信号，两个节点同时发送信号会产生冲突。</p>
+<h3 id="CSMA-CD-协议"><a href="#CSMA-CD-协议" class="headerlink" title="CSMA&#x2F;CD 协议"></a>CSMA&#x2F;CD 协议</h3><p>即 Carrier Sense Multiple Access with Collision Detection，载波监听多点接入&#x2F;碰撞检测。要点是：</p>
+<blockquote>
+<p>先听后发，边听边发，冲突停发，随机重发。</p>
+</blockquote>
+<p>比如 A 节点在发之前会监听信道中是否有其他信号，如果没有，才发自己的信号——先听后发。</p>
+<p>A 节点在发送信号的过程中也会不停的监听信道，如果有别的节点发送信号，产生冲突，立即停止发送——边听边发，冲突停发。</p>
+<p>A 节点停止发送后会随机等待一段时间再尝试重新发送，随机等待会使用<strong>二进制指数退避算法</strong>——随机重发。</p>
+<h3 id="CSMA-CA-协议"><a href="#CSMA-CA-协议" class="headerlink" title="CSMA&#x2F;CA 协议"></a>CSMA&#x2F;CA 协议</h3><h2 id="局域网"><a href="#局域网" class="headerlink" title="局域网"></a>局域网</h2><h3 id="IEEE-802"><a href="#IEEE-802" class="headerlink" title="IEEE 802"></a>IEEE 802</h3><p>IEEE 下属的 802 工作组专门研究局域网技术的标准化和推广，又分为两大类别：</p>
+<ul>
+<li>IEEE 802.3 有线局域网（LAN）：以太网</li>
+<li>IEEE 802.11 无线局域网（WLAN）：WIFI</li>
+</ul>
+<h3 id="MAC层"><a href="#MAC层" class="headerlink" title="MAC层"></a>MAC层</h3><p>数据链路层下设 MAC层（Media Access Control，数据访问控制层） 和 LLC层（Logical Link Control，逻辑链路控制层）。</p>
+<h3 id="局域网的特点"><a href="#局域网的特点" class="headerlink" title="局域网的特点"></a>局域网的特点</h3><ul>
+<li>覆盖较小的地理范围</li>
+<li>较低的时延和误码率</li>
+<li>局域网内各节点<strong>以帧为单位</strong>进行传输，支持单播、多播、广播<ul>
+<li>单播：A -&gt;B</li>
+<li>多播：A -&gt; B,C,D,E</li>
+<li>广播：A -&gt; 局域网内其他所有</li>
+</ul>
+</li>
+</ul>
+<h2 id="PPP协议"><a href="#PPP协议" class="headerlink" title="PPP协议"></a>PPP协议</h2><p>PPP帧格式：</p>
+<img src="/.io//06/18/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0/ppp.png" srcset="/img/loading.gif" lazyload class>
+
+<p>PPP如何实现透明传输？</p>
+<ul>
+<li>字节填充（用于异步传输）：<ul>
+<li>数据部分每出现一个 7E 字节，转义成 7D 5E 两字节</li>
+<li>数据部分每出现一个 7D 字节，转义成 7D 5D 两字节</li>
+</ul>
+</li>
+<li>零比特填充（用于同步传输）：除了首尾的帧界定符之外，只要发现5个连续的1就在后面加一个0（发送方），接收方则是只要有5个1 就把后面的零去掉。</li>
+</ul>
+<h2 id="以太网交换机"><a href="#以太网交换机" class="headerlink" title="以太网交换机"></a>以太网交换机</h2><p>“以太网可以视作一种多端口的网桥，网桥的知识点学过以太网交换机就会了。”</p>
+<h3 id="自学习功能"><a href="#自学习功能" class="headerlink" title="自学习功能"></a>自学习功能</h3><ul>
+<li>每台交换机内部维护一个交换表，初始为空，记录 MAC地址 - 端口号的映射关系。本质是一个缓存</li>
+<li>交换机每收到一个MAC帧，就将发送方的 MAC地址 和 当前端口 记录下来</li>
+<li>接收方有两种情况：<ul>
+<li>交换机缓存里没有接收方端口映射的记录，就把帧<strong>广播</strong>到其他端口。</li>
+<li>知道接收方端口，就直接精准推送到目标端口。</li>
+</ul>
+</li>
+<li>交换表每项都设置“有效时间”（TTL）</li>
+</ul>
+<h1 id="第四章-网络层"><a href="#第四章-网络层" class="headerlink" title="第四章 网络层"></a>第四章 网络层</h1><p>网络层功能：</p>
+<ul>
+<li><p>异构网络互联</p>
+<p>每个网络的拓扑结构不同，下层（物理层、链路层）实现不同。网络层通过<strong>路由器（Router）<strong>连接，路由器也称为</strong>网关</strong></p>
+</li>
+<li><p>路由与转发</p>
+</li>
+<li><p>拥塞控制：</p>
+</li>
+</ul>
+<h2 id="IP数据报（分组）格式"><a href="#IP数据报（分组）格式" class="headerlink" title="IP数据报（分组）格式"></a>IP数据报（分组）格式</h2><p><img src="/.io//becks723/benke/network/ip_packet.png" srcset="/img/loading.gif" lazyload alt="image-20260613232608688"></p>
+<ul>
+<li>版本信息 - 4bit，区分IP协议版本，v4 &#x2F; v6</li>
+<li>首部长度 - 4bit，实际首部长度是这个值<strong>乘以4B</strong></li>
+<li>区分信息 - 8bit，不管</li>
+<li>总长度 - 16bit，包括首部和数据的整个IP分组的长度，实际总长是这个值<strong>乘以1B</strong></li>
+<li>分片信息<ul>
+<li>标识 - 16bit，标识这个IP分组，比如一个大IP分组因为链路上的MTU限制被拆成多个小分组，那么小分组都写同一个标识，目的主机就能重新组装它们。</li>
+<li>标志 - 3bit，只看<strong>最低位和次低位</strong><ul>
+<li>最低位（More Fragment）：这个分组后面是否还有更多分片</li>
+<li>次低位（Don’t Fragment）：这个分组是否不要做分片</li>
+</ul>
+</li>
+<li>片位移 - 13bit，当前分片在原分组中的偏移量，实际偏移量是这个值<strong>乘以8B</strong></li>
+</ul>
+</li>
+<li>生存时间TTL - 8bit，设置该分组能通过的最大路由器数量，超出直接丢弃，并向源主机发送一个ICMP报文</li>
+<li>协议 - 8bit</li>
+<li>首部校验和 - 16bit</li>
+</ul>
+<h2 id="IP分组的“分片”"><a href="#IP分组的“分片”" class="headerlink" title="IP分组的“分片”"></a>IP分组的“分片”</h2><img src="/.io//06/18/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0/ip_fragment.png" srcset="/img/loading.gif" lazyload class>
+
+<h2 id="IP地址（IPv4）"><a href="#IP地址（IPv4）" class="headerlink" title="IP地址（IPv4）"></a>IP地址（IPv4）</h2><blockquote>
+<p> 这部分讲的是IP地址最初的分配方案。</p>
+</blockquote>
+<p>IP地址大小为 <strong>32bit</strong>。</p>
+<p>单播地址（主机）：</p>
+<ul>
+<li>A 类地址（1 - 126）：前 8bit 网络号，后 24bit 主机号</li>
+<li>B 类地址（128 - 191）：前 16bit 网络号，后 16bit 主机号</li>
+<li>C 类地址（192 - 223）：前 24bit 网络号，后 8bit 主机号</li>
+</ul>
+<p>多播地址：</p>
+<ul>
+<li>D 类（224 - 239）</li>
+</ul>
+<img src="/.io//06/18/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0/ip_addr.png" srcset="/img/loading.gif" lazyload class>
+
+<p>在一个内部机构中（如企业、学校），IP地址的网络号部分是由IP地址供应商提供的，需要申请；后面的主机号是由机构内的网络管理人员按需求分配的。</p>
+<img src="/.io//06/18/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0/ip_special.png" srcset="/img/loading.gif" lazyload class>
+
+<h2 id="子网划分-子网掩码"><a href="#子网划分-子网掩码" class="headerlink" title="子网划分 &#x2F; 子网掩码"></a>子网划分 &#x2F; 子网掩码</h2><p>子网划分的过程是：</p>
+<blockquote>
+<p>若某单位租用了一个IP地址段，假设原本的<strong>主机号占 n bit</strong>，那么可以将前 k bit 拿出来作为<strong>子网号</strong>，那么剩余的 n - k bit 就是新的主机号。这样划分出 2^k 个子网，每个子网包含的IP地址块大小相等。</p>
+</blockquote>
+<ul>
+<li>子网划分前，IP地址两级结构 &#x3D; &lt;网络号，主机号&gt;</li>
+<li>子网划分后，IP地址三级结构 &#x3D; &lt;网络号，子网号，主机号&gt;</li>
+</ul>
+<p>子网掩码：</p>
+<blockquote>
+<p>子网掩码构成：</p>
+<ul>
+<li>&lt;网络号，子网号&gt; 部分全1</li>
+<li>&lt;主机号&gt; 部分全0</li>
+</ul>
+<p>用子网掩码逐位与 IP地址，算出&lt; 网络号，子网号&gt;，合成“网络前缀”，只有网络前缀相同的IP地址，才属于同一个网络。</p>
+</blockquote>
+<p>默认子网掩码：由子网掩码构成易得：</p>
+<ul>
+<li>A 类默认：255.0.0.0</li>
+<li>B 类默认：255.255.0.0</li>
+<li>C 类默认：255.255.255.0</li>
+</ul>
+<h2 id="无分类编址-CIDR"><a href="#无分类编址-CIDR" class="headerlink" title="无分类编址 CIDR"></a>无分类编址 CIDR</h2><p>CICR 是1993年为了缓解IP地址数量紧张而提出的。</p>
+<h2 id="路由聚合"><a href="#路由聚合" class="headerlink" title="路由聚合"></a>路由聚合</h2><blockquote>
+<p>对于一个路由转发表，如果几条路由转发项的<strong>转发接口相同</strong>，部分<strong>网络前缀也相同</strong>，那么可以将这几项聚合成一条，称为路由聚合。</p>
+</blockquote>
+<p>如下图中的1,2,3项前27位网络前缀都相同，且出发接口都为G1，那么就聚合为项4</p>
+<img src="/.io//06/18/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0/route-agg.png" srcset="/img/loading.gif" lazyload class>
+
+
+
+<h2 id="网络地址转换-NAT"><a href="#网络地址转换-NAT" class="headerlink" title="网络地址转换 NAT"></a>网络地址转换 NAT</h2><p>NAT 是1994年同样为了缓解 IP地址数量紧张而提出的。</p>
+<blockquote>
+<p>NAT 将 IP地址分为了外网 IP 和内网 IP。</p>
+<ul>
+<li><strong>外网IP</strong>：全球IP地址，通常由 ISP 提供，<strong>全球唯一</strong></li>
+<li><strong>内网IP</strong>：每个局域网内自行分配这些私有IP，<strong>只要求局域网内唯一</strong>，不要求全球唯一。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>NAT 路由器</strong>是一种特殊的路由器，和普通路由器的不同之处在于，它会在转发IP分组时，进行内网IP和外网IP的相互映射。它用到了NAT表来记录映射关系。</p>
+<p><strong>NAT表</strong>记录映射关系，格式为：<code>&lt;内网IP:内网端口 - 外网IP:外网端口&gt;</code></p>
+</blockquote>
+<p>下面的IP只允许内网用，公网不允许：</p>
+<ul>
+<li>10.0.0.0 - 10.255.255.255</li>
+<li>172.16.0.0 - 172.31.255.255</li>
+<li>192.168.0.0 - 192.168.255.255</li>
+</ul>
+<img src="/.io//06/18/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0/nat.png" srcset="/img/loading.gif" lazyload class>
+
+<h2 id="地址解析协议-ARP"><a href="#地址解析协议-ARP" class="headerlink" title="地址解析协议 ARP"></a>地址解析协议 ARP</h2><blockquote>
+<p>ARP协议用于在一个局域网内部，通过ARP协议查询到一个IP地址对应的MAC地址。</p>
+</blockquote>
+<h3 id="ARP表（缓存）"><a href="#ARP表（缓存）" class="headerlink" title="ARP表（缓存）"></a>ARP表（缓存）</h3><p>ARP会维护一个缓存表，记录 IP地址和MAC地址 的映射关系。</p>
+<p>每台主机、路由器都有自己的一个ARP表。</p>
+<h3 id="ARP过程"><a href="#ARP过程" class="headerlink" title="ARP过程"></a>ARP过程</h3><p>请求阶段</p>
+<blockquote>
+<p>比如局域网中一台主机要向网关&#x2F;互联网中的另一台主机，whatever，发送一个IP数据报。</p>
+<p>一开始发送方肯定不知道对方的MAC地址（那么为什么需要MAC地址呢，这是链路层组帧的需求……这里skip了），那么它会先发送一个ARP请求分组。</p>
+<p>ARP请求分组中写明 </p>
+<ol>
+<li>我是谁？我的IP地址是X，MAC地址是Y</li>
+<li>我想找谁？它的IP地址是Z，MAC地址就是我要找的</li>
+</ol>
+<p>接着ARP请求分组封装成MAC帧，帧的源地址是Y，目的地址全1，表示<strong>广播帧</strong>。</p>
+</blockquote>
+<p>响应阶段</p>
+<blockquote>
+<p>广播帧会广播给局域网内的所有主机，那么the right one收到请求分组将回复一个ARP响应分组。</p>
+<p>ARP响应分组写明，我就是你要找的主机，我的IP地址是Z，MAC地址是V</p>
+<p>接着ARP响应分组同样封装成MAC帧，帧源地址是V，目的地址是Y。</p>
+</blockquote>
+<h2 id="路由算法"><a href="#路由算法" class="headerlink" title="路由算法"></a>路由算法</h2><blockquote>
+<p>路由算法的目标是 找到转发IP分组的“最佳路径”。</p>
+</blockquote>
+<p>路由算法分为静态和动态路由算法。下面是两种典型的动态路由算法：</p>
+<h3 id="距离向量路由算法（RIP基于）"><a href="#距离向量路由算法（RIP基于）" class="headerlink" title="距离向量路由算法（RIP基于）"></a>距离向量路由算法（RIP基于）</h3><ul>
+<li>本质是 Bellman-Ford 算法</li>
+<li>路由器不必关心整个网络拓扑结构，只需关心和邻居之间的距离，各个邻居和目的网络的最短距离</li>
+</ul>
+<h3 id="链路状态路由算法（OSPF基于）"><a href="#链路状态路由算法（OSPF基于）" class="headerlink" title="链路状态路由算法（OSPF基于）"></a>链路状态路由算法（OSPF基于）</h3><h2 id="分层次的路由协议"><a href="#分层次的路由协议" class="headerlink" title="分层次的路由协议"></a>分层次的路由协议</h2><blockquote>
+<p>由于全世界数以亿计的路由器和网络，所以不可能要求所有的路由器使用统一的一个路由协议，那么分层次的路由协议因运而生。</p>
+</blockquote>
+<p>自治系统AS：</p>
+<ul>
+<li><p>全世界的互联网被划分为相互独立的自治系统AS，每个AS都有唯一的 编号ASN。</p>
+</li>
+<li><p>每个AS都有至少一台<strong>边界路由器</strong>，与其他AS相连。</p>
+</li>
+<li><p>AS之间是平级关系，不存在包含关系。</p>
+</li>
+</ul>
+<p>自治系统内外使用的路由协议分不同的叫法：</p>
+<ul>
+<li>内部网关协议（IGP）：AS内部的路由协议，由AS自行选择</li>
+<li>外部网关协议（EGP）：AS之间的路由选择，如 BGP</li>
+</ul>
+<h2 id="RIP协议"><a href="#RIP协议" class="headerlink" title="RIP协议"></a>RIP协议</h2><ul>
+<li><strong>应用层</strong>协议，它使用 UDP 传送数据，端口 520</li>
+<li>RIP如何定义路径长度？<ul>
+<li>使用跳数（Hop Count）衡量，每经过一个路由器跳数加一；路由器到直连网络的距离为1。</li>
+<li>RIP认为好的路由就是<strong>跳数最少的</strong>那个。</li>
+<li>一条合法路径长度不超过15，距离等于16时表示网络不可达。</li>
+<li>由上条，适用于<strong>小型的自治系统</strong>。</li>
+</ul>
+</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计网复习</div>
+      <div>https://becks723.github.io/2026/06/18/计网复习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Becks723</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年6月18日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/04/27/learn-claude-code/" title="learn-claude-code">
+                        <span class="hidden-mobile">learn-claude-code</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
