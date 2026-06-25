@@ -27,7 +27,7 @@
 <meta property="og:description" content="函数传参是值类型还是引用类型？ 无论如何都是值传递。  基本类型（int, string等）：拷贝值  结构体：拷贝值  指针类型：拷贝值，但由于指针指向变量的地址，所以能实现修改值  slice&#x2F;map&#x2F;channel：依旧拷贝值，能实现修改值是因为内部有指针指向同一个数组。 比如 slice 的本质是： 12345type slice struct &#123;    pt">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-04-23T11:58:57.000Z">
-<meta property="article:modified_time" content="2026-06-25T18:20:41.910Z">
+<meta property="article:modified_time" content="2026-06-25T19:41:29.074Z">
 <meta property="article:author" content="Becks723">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          1.7k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          12 分钟
+          15 分钟
         
       </span>
     
@@ -381,8 +381,52 @@
 <li>最后程序输出什么？</li>
 </ol>
 <h2 id="slice作为参数传递，可能改变原来的slice吗？"><a href="#slice作为参数传递，可能改变原来的slice吗？" class="headerlink" title="slice作为参数传递，可能改变原来的slice吗？"></a>slice作为参数传递，可能改变原来的slice吗？</h2><p>分情况，这要看你有没有更改slice指向的数组值。因为slice本身会拷贝一份副本当成参数传入，底层三个属性：指向数组的指针、len、cap都是副本，但是如果在方法中修改底层数组的话，原有的slice是会变的。</p>
+<h1 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h1><h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>Golang有个著名的思想：</p>
+<blockquote>
+<p>不要通过共享内存来通信，而是通过通信来共享内存</p>
+</blockquote>
+<p>Java&#x2F;C++ 中多线程的写法常常是：多个线程中共享某些变量，再通过信号量&#x2F;锁机制来解决同步问题。本质上是先共享内存，以此来解决通信问题。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> count <span class="hljs-type">int</span><br><span class="hljs-keyword">var</span> mu sync.Mutex<br><br><span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>  mu.Lock()<br>  count++<br>  mu.Unlock()<br>&#125;()<br><br><span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>  mu.Lock()<br>  count++<br>  mu.Unlock()<br>&#125;()<br></code></pre></td></tr></table></figure>
+
+<p>而 Golang 引入了 Channel 管道来解决 Goroutine之间的通信问题，并以此实现数据共享。我们可以明显看到好处：</p>
+<ol>
+<li>Goroutine之间不需要共享内存变量，它们除了将数据传给ch以外 对内存是无感知的。避免了因为共享内存而不得不引入同步，加锁&#x2F;信号这些繁杂的操作，减少错误。</li>
+<li>内存变量如果是敏感数据，共享给不同的线程&#x2F;Goroutine增加风险；而基于Channel通信别的Goroutine根本访问不到这些敏感变量，提高安全性。</li>
+</ol>
+<p>这里有一个银行账户的例子：</p>
+<ul>
+<li>传统的共享内存的实现：</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Account <span class="hljs-keyword">struct</span> &#123;<br>  <span class="hljs-type">int</span> balance<br>  mu sync.Mutex <span class="hljs-comment">// 加锁</span><br>&#125;<br><br><span class="hljs-comment">// Withdraw: 取钱</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(a *Acount)</span></span> Withdraw(amount <span class="hljs-type">int</span>) &#123;<br>  mu.Lock()<br>  <span class="hljs-keyword">defer</span> mu.Unlock()<br>  <br>  a.balance -= amount<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>基于Channel实现：</p>
+<pre><code class="language-go">type Withdraw struct &#123;
+  amount int
+&#125;
+
+reqCh := make(chan Withdraw)
+
+// 取钱实现：不断读管道数据，每次都更新账户
+go func() &#123;
+  account := &amp;Account&#123;1000&#125;
+  
+  for req := range reqCh &#123;
+    account.balance -= req.amount
+  &#125;
+&#125;()
+
+// 调用取钱的时候：往管道里塞数据就行
+reqCh &lt;- Withdraw&#123;100&#125;
+</code></pre>
+</li>
+</ul>
 <h1 id="GMP"><a href="#GMP" class="headerlink" title="GMP"></a>GMP</h1><blockquote>
 <p>这部分是跟着 刘丹冰aceId 学的，b站有视频，也有他自己出版的书。</p>
+</blockquote>
+<blockquote>
 <p>原版文档可以看 <a target="_blank" rel="noopener" href="https://github.com/aceld/golang/blob/main/2%E3%80%81Golang%E7%9A%84%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6%E5%99%A8%E5%8E%9F%E7%90%86%E5%8F%8AGMP%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3%EF%BC%9F.md">github</a></p>
 <p>下面是一个思路概括</p>
 </blockquote>
